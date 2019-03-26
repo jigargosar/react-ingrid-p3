@@ -4,6 +4,7 @@ import faker from 'faker'
 import { times } from 'ramda'
 import isHotkey from 'is-hotkey'
 import { rootReducer } from './rootReducer'
+import { selectLineAction, selectNextAction, selectPrevAction } from './actions'
 
 function newLine() {
   return { id: `id_${nanoid()}`, title: faker.name.lastName() }
@@ -23,18 +24,6 @@ function cachedState() {
     return JSON.parse(jsonString)
   }
   return null
-}
-
-function selectLineAction(line, dispatch) {
-  dispatch({ type: 'sl', line })
-}
-
-function selectNextAction(dispatch) {
-  dispatch({ type: 'sNext' })
-}
-
-function selectPrevAction(dispatch) {
-  dispatch({ type: 'sPrev' })
 }
 
 function Line({ line, isSelected, dispatch }) {
