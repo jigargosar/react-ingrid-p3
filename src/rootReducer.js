@@ -1,4 +1,7 @@
 import { SELECT_LINE, SELECT_NEXT_LINE, SELECT_PREV_LINE } from './actions'
+import nanoid from 'nanoid'
+import faker from 'faker'
+import { times } from 'ramda'
 
 function sNext(state) {
   const idx = state.lines.findIndex(l => l.id === state.selectedId)
@@ -38,4 +41,16 @@ export function rootReducer(state, action) {
       console.error('Unknown action.type', action.type)
   }
   return state
+}
+
+function newLine() {
+  return { id: `id_${nanoid()}`, title: faker.name.lastName() }
+}
+
+export function initialState() {
+  let lines = times(newLine, 10)
+  return {
+    lines,
+    selectedId: lines[0].id,
+  }
 }

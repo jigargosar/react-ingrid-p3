@@ -1,22 +1,7 @@
 import React, { useEffect, useLayoutEffect, useReducer, useRef } from 'react'
-import nanoid from 'nanoid'
-import faker from 'faker'
-import { times } from 'ramda'
 import isHotkey from 'is-hotkey'
-import { rootReducer } from './rootReducer'
+import { initialState, rootReducer } from './rootReducer'
 import { selectLineAction, selectNextAction, selectPrevAction } from './actions'
-
-function newLine() {
-  return { id: `id_${nanoid()}`, title: faker.name.lastName() }
-}
-
-function initialState() {
-  let lines = times(newLine, 10)
-  return {
-    lines,
-    selectedId: lines[0].id,
-  }
-}
 
 function cachedState() {
   const jsonString = localStorage.getItem('react-ingrid-p3')
