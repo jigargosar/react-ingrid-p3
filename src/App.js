@@ -1,16 +1,8 @@
-import React, { useEffect, useLayoutEffect, useReducer, useRef } from 'react'
-import isHotkey from 'is-hotkey'
+import React, { useLayoutEffect, useReducer, useRef } from 'react'
 import { initialState, rootReducer } from './rootReducer'
 import { selectLineAction, selectNextAction, selectPrevAction } from './actions'
-import { reduce, reduced } from 'ramda'
-
-function cachedState() {
-  const jsonString = localStorage.getItem('react-ingrid-p3')
-  if (jsonString) {
-    return JSON.parse(jsonString)
-  }
-  return null
-}
+import { useHotKeyDispatcher } from './hooks/useHotKey'
+import { getCached, useCacheEffect } from './hooks/useCacheEffect'
 
 function Line({ line, isSelected, dispatch }) {
 
@@ -32,48 +24,17 @@ function Line({ line, isSelected, dispatch }) {
   </div>
 }
 
-function findHotKeyHandler(e, km) {
-  return reduce((handler, key) => {
-    if (isHotkey(key, e)) {
-      return reduced(handler)
-    }
-  })(km)
-}
-
-
-
-function useHotKeyDispatcher(currentHotKeyMap, dispatch) {
-  useEffect(() => {
-    window.addEventListener('keydown', listener)
-
-    function listener(e) {
-      const handler = findHotKeyHandler(e, currentHotKeyMap())
-      if (handler) {
-        e.preventDefault()
-        handler(dispatch)
-      }
-
-    }
-
-    return () => {
-      window.removeEventListener('keydown', listener)
-    }
-  }, [])
-}
-
 function App() {
 
-  const [state, dispatch] = useReducer(rootReducer, null, () => cachedState() || initialState())
+  const cacheKey = 'react-ingrid-p3'
+  const [state, dispatch] = useReducer(rootReducer, null, () => getCached(cacheKey) || initialState())
+  useCacheEffect(cacheKey, state)
 
   function currentHotKeyMap() {
     return { up: selectPrevAction, down: selectNextAction }
   }
 
   useHotKeyDispatcher(currentHotKeyMap, dispatch)
-
-  useEffect(() => {
-    localStorage.setItem('react-ingrid-p3', JSON.stringify(state))
-  }, [state])
 
   return (
     <div className="min-vh-100 pv3 ph2">
