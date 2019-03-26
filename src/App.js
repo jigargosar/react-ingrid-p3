@@ -20,7 +20,7 @@ function LineList({ state, dispatch }) {
   })
 }
 
-function App() {
+function useRootState() {
   const cacheKey = 'react-ingrid-p3'
   const [state, dispatch] = useReducer(
     rootReducer,
@@ -35,6 +35,11 @@ function App() {
   })
 
   useHotKeyDispatcher(currentHotKeyMap, dispatch)
+  return [state, dispatch]
+}
+
+function App() {
+  const [state, dispatch] = useRootState()
 
   return (
     <div className="min-vh-100 pv3 ph2">
