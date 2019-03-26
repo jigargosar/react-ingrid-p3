@@ -81,10 +81,11 @@ const historyEnhancer = reducer => {
     const newState = reducer(oldState, action)
 
     const newStateWithoutHistory = omitHistory(newState)
-    if (notEquals(omitHistory(oldState), newStateWithoutHistory)) {
+    const oldStateWithoutHistory = omitHistory(oldState)
+    if (notEquals(oldStateWithoutHistory, newStateWithoutHistory)) {
       return overHistory(({ undoStack } = initialHistoryState) => {
         return {
-          undoStack: prepend(newStateWithoutHistory, undoStack),
+          undoStack: prepend(oldStateWithoutHistory, undoStack),
           redoStack: [],
         }
       })(newState)
