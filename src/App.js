@@ -80,11 +80,12 @@ function Line({ line, isSelected, dispatch }) {
   let sc = `${isSelected ? 'bg-blue white' : ''}`
   const ref = useRef()
 
-  useLayoutEffect(()=>{
+  useLayoutEffect(() => {
     const el = ref.current
-    if(isSelected&& el){el.focus()}
-  },[isSelected])
-
+    if (isSelected && el) {
+      el.focus()
+    }
+  }, [isSelected])
 
   return <div ref={ref} key={line.id} className={`lh-copy ph3 br2 ${sc}`}
               tabIndex={0}
