@@ -2,7 +2,7 @@ import React, { useEffect, useLayoutEffect, useReducer, useRef } from 'react'
 import isHotkey from 'is-hotkey'
 import { initialState, rootReducer } from './rootReducer'
 import { selectLineAction, selectNextAction, selectPrevAction } from './actions'
-import { forEachObjIndexed } from 'ramda'
+import { reduce, reduced } from 'ramda'
 
 function cachedState() {
   const jsonString = localStorage.getItem('react-ingrid-p3')
@@ -32,6 +32,14 @@ function Line({ line, isSelected, dispatch }) {
   </div>
 }
 
+function findHotKeyHandler(e, km) {
+  return reduce((handler, key) => {
+    if (isHotkey(key, e)) {
+      return reduced(handler)
+    }
+  })(km)
+}
+
 function App() {
 
   const [state, dispatch] = useReducer(rootReducer, null, () => cachedState() || initialState())
@@ -41,12 +49,11 @@ function App() {
 
       const km = { up: selectPrevAction, down: selectNextAction }
 
-      forEachObjIndexed((fn, key) => {
-        if (isHotkey(key, e)) {
-          e.preventDefault()
-          fn(dispatch)
-        }
-      })(km)
+      const action = findHotKeyHandler(e, km)
+      if (action) {
+        e.preventDefault()
+        dispatch(action)
+      }
 
     })
   }, [])
