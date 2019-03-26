@@ -14,14 +14,16 @@ function App() {
     }
   })
   return (
-    <div className="code">
-      {state.lines.map(line=>{
+    <div className="min-vh-100 pv3">
+      <div className="code">
+        {state.lines.map(line => {
 
-        return <div key={line.id} className="lh-copy ph3">
-          {line.title}
-        </div>
-      })}
+          return <div key={line.id} className="lh-copy ph3">
+            {line.title}
+          </div>
+        })}
 
+      </div>
     </div>
   )
 }
