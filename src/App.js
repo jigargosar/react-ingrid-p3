@@ -2,6 +2,7 @@ import React, { useEffect, useReducer } from 'react'
 import nanoid from 'nanoid'
 import faker from 'faker'
 import { times } from 'ramda'
+import isHotkey from 'is-hotkey'
 
 function newLine() {
   return { id: `id_${nanoid()}`, title: faker.name.lastName() }
@@ -27,10 +28,22 @@ function selectLineAction(line, dispatch) {
   dispatch({ action: 'sl', line })
 }
 
+function selectNextAction(dispatch) {
+  dispatch({ action: 'sNext'})
+}
+
+function selectPrevAction(dispatch) {
+  dispatch({ action: 'sPrev'})
+}
+
 function rootReducer(state, action) {
   console.log(`state,action`, state, action)
   switch (action.type) {
     case 'sl':
+      break
+    case 'sNext':
+      break
+    case 'sPrev':
       break
     default :
       console.error('Unknown action.type', action.type)
@@ -55,6 +68,15 @@ function App() {
 
   const [state, dispatch] = useReducer(rootReducer, null, () => cachedState() || initialState())
 
+  useEffect(()=>{
+    window.addEventListener('keydown',e=>{
+      if(isHotkey('up', e)){
+        selectPrevAction()
+      }else if(isHotkey('down', e)){
+        selectNextAction()
+      }
+    })
+  },[])
 
   useEffect(() => {
     localStorage.setItem('react-ingrid-p3', JSON.stringify(state))
