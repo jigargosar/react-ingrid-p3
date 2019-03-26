@@ -15,7 +15,7 @@ import {
   undo,
 } from './undoManager'
 
-function sNext(state) {
+function selectNextLine(state) {
   const idx = state.lines.findIndex(l => l.id === state.selectedId)
   if (idx > -1) {
     const newIdx = idx + 1
@@ -27,7 +27,7 @@ function sNext(state) {
   return state
 }
 
-function sPrev(state) {
+function selectPreviousLine(state) {
   const idx = state.lines.findIndex(l => l.id === state.selectedId)
   if (idx > -1) {
     const newIdx = idx - 1
@@ -48,9 +48,9 @@ export function reducer(state, action) {
     case SELECT_LINE:
       return { ...state, selectedId: payload.line.id }
     case SELECT_NEXT_LINE:
-      return sNext(state)
+      return selectNextLine(state)
     case SELECT_PREV_LINE:
-      return sPrev(state)
+      return selectPreviousLine(state)
     case UNDO:
       return undo(state)
     case REDO:
