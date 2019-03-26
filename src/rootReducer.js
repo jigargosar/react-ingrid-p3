@@ -26,9 +26,10 @@ function sPrev(state) {
 
 export function rootReducer(state, action) {
   // console.log(`state,action`, state, action)
+  const payload = action.payload
   switch (action.type) {
     case SELECT_LINE:
-      return { ...state, selectedId: action.line.id }
+      return { ...state, selectedId: payload.line.id }
     case SELECT_NEXT_LINE:
       return sNext(state)
     case SELECT_PREV_LINE:

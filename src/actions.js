@@ -3,7 +3,7 @@ export const SELECT_NEXT_LINE = 'sNext'
 export const SELECT_PREV_LINE = 'sPrev'
 
 export function selectLineAction(line, dispatch) {
-  dispatch({ type: SELECT_LINE, line })
+  dispatch({ type: SELECT_LINE, payload: { line } })
 }
 
 export function selectNextAction(dispatch) {
