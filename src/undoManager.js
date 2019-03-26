@@ -48,7 +48,7 @@ export const reducerEnhancer = reducer => {
     const newStateWithoutHistory = omitHistory(newState)
     const oldStateWithoutHistory = omitHistory(oldState)
     if (notEquals(oldStateWithoutHistory, newStateWithoutHistory)) {
-      return overHistory(({ undoStack } = initialHistoryState) => {
+      return overHistory(({ undoStack }) => {
         return {
           undoStack: prepend(oldStateWithoutHistory, undoStack),
           redoStack: [],
