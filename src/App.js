@@ -40,23 +40,34 @@ function findHotKeyHandler(e, km) {
   })(km)
 }
 
-function App() {
-
-  const [state, dispatch] = useReducer(rootReducer, null, () => cachedState() || initialState())
-
+function useHotKeyDispatcher(currentHotKeyMap, dispatch) {
   useEffect(() => {
-    window.addEventListener('keydown', e => {
+    window.addEventListener('keydown', listener)
 
-      const km = { up: selectPrevAction, down: selectNextAction }
-
-      const handler = findHotKeyHandler(e, km)
+    function listener(e) {
+      const handler = findHotKeyHandler(e, currentHotKeyMap())
       if (handler) {
         e.preventDefault()
         handler(dispatch)
       }
 
-    })
+    }
+
+    return () => {
+      window.removeEventListener('keydown', listener)
+    }
   }, [])
+}
+
+function App() {
+
+  const [state, dispatch] = useReducer(rootReducer, null, () => cachedState() || initialState())
+
+  function currentHotKeyMap() {
+    return { up: selectPrevAction, down: selectNextAction }
+  }
+
+  useHotKeyDispatcher(currentHotKeyMap, dispatch)
 
   useEffect(() => {
     localStorage.setItem('react-ingrid-p3', JSON.stringify(state))
