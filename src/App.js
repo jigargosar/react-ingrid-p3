@@ -40,6 +40,8 @@ function findHotKeyHandler(e, km) {
   })(km)
 }
 
+
+
 function useHotKeyDispatcher(currentHotKeyMap, dispatch) {
   useEffect(() => {
     window.addEventListener('keydown', listener)
