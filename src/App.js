@@ -30,9 +30,7 @@ function App() {
   const [state, dispatch] = useReducer(rootReducer, null, () => getCached(cacheKey) || initialState())
   useCacheEffect(cacheKey, state)
 
-  function currentHotKeyMap() {
-    return { up: selectPrevAction, down: selectNextAction }
-  }
+  const currentHotKeyMap = () => ({ up: selectPrevAction, down: selectNextAction })
 
   useHotKeyDispatcher(currentHotKeyMap, dispatch)
 
