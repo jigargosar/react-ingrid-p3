@@ -25,7 +25,7 @@ function cachedState() {
 
 function App() {
 
-  const [state, setState] = useState(() => initialState())
+  const [state, setState] = useState(() => cachedState() || initialState())
 
   useEffect(() => {
     localStorage.setItem('react-ingrid-p3', JSON.stringify(state))
