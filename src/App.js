@@ -23,7 +23,12 @@ function App() {
 
           let cc = `${isSelected ? "bg-blue white" : ""}`
 
-          return <div key={line.id} className={`lh-copy ph3 br2 ${cc}`}>
+          return <div key={line.id} className={`lh-copy ph3 br2 ${cc}`}
+                      tabIndex={0}
+                      onFocus={()=>setState(s=>{
+                        return {...s, selectedId: line.id}
+                      })}
+          >
             {line.title}
           </div>
         })}
