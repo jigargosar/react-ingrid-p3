@@ -3,6 +3,7 @@ import nanoid from 'nanoid'
 import faker from 'faker'
 import { times } from 'ramda'
 import isHotkey from 'is-hotkey'
+import { rootReducer } from './rootReducer'
 
 function newLine() {
   return { id: `id_${nanoid()}`, title: faker.name.lastName() }
@@ -34,45 +35,6 @@ function selectNextAction(dispatch) {
 
 function selectPrevAction(dispatch) {
   dispatch({ type: 'sPrev' })
-}
-
-function sNext(state) {
-  const idx = state.lines.findIndex(l => l.id === state.selectedId)
-  if (idx > -1) {
-    const newIdx = idx + 1
-    if (newIdx >= 0 && newIdx < state.lines.length) {
-      const newSelectedId = state.lines[newIdx].id
-      return { ...state, selectedId: newSelectedId }
-    }
-  }
-  return state
-}
-
-function sPrev(state) {
-  const idx = state.lines.findIndex(l => l.id === state.selectedId)
-  if (idx > -1) {
-    const newIdx = idx - 1
-    if (newIdx >= 0 && newIdx < state.lines.length) {
-      const newSelectedId = state.lines[newIdx].id
-      return { ...state, selectedId: newSelectedId }
-    }
-  }
-  return state
-}
-
-function rootReducer(state, action) {
-  // console.log(`state,action`, state, action)
-  switch (action.type) {
-    case 'sl':
-      return { ...state, selectedId: action.line.id }
-    case 'sNext':
-      return sNext(state)
-    case 'sPrev':
-      return sPrev(state)
-    default :
-      console.error('Unknown action.type', action.type)
-  }
-  return state
 }
 
 function Line({ line, isSelected, dispatch }) {
