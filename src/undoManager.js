@@ -41,9 +41,6 @@ export function redo(state) {
 }
 
 export const historyEnhancer = reducer => {
-  const overHistory = over(lensPath(['history']))
-  const omitHistory = omit(['history'])
-  const notEquals = complement(equals)
   return (oldState, action) => {
     const newState = reducer(oldState, action)
     if ([UNDO, REDO].includes(action.type)) return newState
@@ -62,3 +59,7 @@ export const historyEnhancer = reducer => {
     return newState
   }
 }
+
+const overHistory = over(lensPath(['history']))
+const omitHistory = omit(['history'])
+const notEquals = complement(equals)
