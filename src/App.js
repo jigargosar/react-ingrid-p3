@@ -1,35 +1,23 @@
-import React, { useLayoutEffect, useReducer, useRef } from 'react'
+import React, { useReducer } from 'react'
 import { initialState, rootReducer } from './rootReducer'
-import {
-  selectLineAction,
-  selectNextAction,
-  selectPrevAction,
-} from './actions'
+import { selectNextAction, selectPrevAction } from './actions'
 import { useHotKeyDispatcher } from './hooks/useHotKey'
 import { getCached, useCacheEffect } from './hooks/useCacheEffect'
+import { Line } from './components/Line'
 
-function Line({ line, isSelected, dispatch }) {
-  const sc = `${isSelected ? 'bg-blue white' : ''}`
-  const ref = useRef()
+function LineList({ state, dispatch }) {
+  return state.lines.map(line => {
+    const isSelected = line.id === state.selectedId
 
-  useLayoutEffect(() => {
-    const el = ref.current
-    if (isSelected && el) {
-      el.focus()
-    }
-  }, [isSelected])
-
-  return (
-    <div
-      ref={ref}
-      key={line.id}
-      className={`lh-copy ph3 br2 ${sc}`}
-      tabIndex={0}
-      onFocus={() => selectLineAction(line, dispatch)}
-    >
-      {line.title}
-    </div>
-  )
+    return (
+      <Line
+        key={line.id}
+        line={line}
+        isSelected={isSelected}
+        dispatch={dispatch}
+      />
+    )
+  })
 }
 
 function App() {
@@ -51,18 +39,7 @@ function App() {
   return (
     <div className="min-vh-100 pv3 ph2">
       <div className="code">
-        {state.lines.map(line => {
-          const isSelected = line.id === state.selectedId
-
-          return (
-            <Line
-              key={line.id}
-              line={line}
-              isSelected={isSelected}
-              dispatch={dispatch}
-            />
-          )
-        })}
+        <LineList state={state} dispatch={dispatch} />
       </div>
     </div>
   )
