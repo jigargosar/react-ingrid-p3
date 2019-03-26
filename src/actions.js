@@ -15,3 +15,10 @@ export function selectNextAction(dispatch) {
 export function selectPrevAction(dispatch) {
   dispatch({ type: SELECT_PREV_LINE })
 }
+
+export function undoAction(dispatch) {
+  dispatch({ type: UNDO })
+}
+export function redoAction(dispatch) {
+  dispatch({ type: REDO })
+}

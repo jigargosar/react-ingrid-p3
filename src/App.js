@@ -1,6 +1,11 @@
 import React, { useReducer } from 'react'
 import { initialState, rootReducer } from './rootReducer'
-import { selectNextAction, selectPrevAction } from './actions'
+import {
+  redoAction,
+  selectNextAction,
+  selectPrevAction,
+  undoAction,
+} from './actions'
 import { useHotKeyDispatcher } from './hooks/useHotKey'
 import { getCached, useCacheEffect } from './hooks/useCacheEffect'
 import { LineList } from './components/LineList'
@@ -17,6 +22,8 @@ function useRootState() {
   const currentHotKeyMap = () => ({
     up: selectPrevAction,
     down: selectNextAction,
+    'meta+z': undoAction,
+    'meta+shift+z': redoAction,
   })
 
   useHotKeyDispatcher(currentHotKeyMap, dispatch)
