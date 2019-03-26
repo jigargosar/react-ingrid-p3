@@ -1,7 +1,15 @@
 import { SELECT_LINE, SELECT_NEXT_LINE, SELECT_PREV_LINE } from './actions'
 import nanoid from 'nanoid'
 import faker from 'faker'
-import { times } from 'ramda'
+import {
+  complement,
+  equals,
+  lensPath,
+  omit,
+  over,
+  prepend,
+  times,
+} from 'ramda'
 
 function sNext(state) {
   const idx = state.lines.findIndex(l => l.id === state.selectedId)
@@ -27,7 +35,34 @@ function sPrev(state) {
   return state
 }
 
-export function rootReducer(state, action) {
+const initialHistoryState = { undoStack: [], redoStack: [] }
+
+const historyEnhancer = reducer => {
+  const omitHistory = omit(['history'])
+  const notEquals = complement(equals)
+  const overHistory = over(lensPath(['history']))
+  return (oldState, action) => {
+    const newState = reducer(oldState, action)
+
+    const newStateWithoutHistory = omitHistory(newState)
+    if (notEquals(omitHistory(oldState), newStateWithoutHistory)) {
+      return overHistory(
+        ({ undoStack, redoStack } = initialHistoryState) => {
+          return {
+            undoStack: prepend(newStateWithoutHistory, undoStack),
+            redoStack: [],
+          }
+        },
+      )
+    }
+
+    return newState
+  }
+}
+
+export const rootReducer = historyEnhancer(reducer)
+
+export function reducer(state, action) {
   // console.log(`state,action`, state, action)
   const payload = action.payload
   switch (action.type) {
@@ -37,7 +72,7 @@ export function rootReducer(state, action) {
       return sNext(state)
     case SELECT_PREV_LINE:
       return sPrev(state)
-    default :
+    default:
       console.error('Unknown action.type', action.type)
   }
   return state
@@ -52,5 +87,6 @@ export function initialState() {
   return {
     lines,
     selectedId: lines[0].id,
+    history: initialHistoryState,
   }
 }
