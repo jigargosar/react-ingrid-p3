@@ -40,7 +40,7 @@ export function redo(state) {
   return state
 }
 
-export const historyEnhancer = reducer => {
+export const reducerEnhancer = reducer => {
   return (oldState, action) => {
     const newState = reducer(oldState, action)
     if ([UNDO, REDO].includes(action.type)) return newState

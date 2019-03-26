@@ -9,9 +9,9 @@ import nanoid from 'nanoid'
 import faker from 'faker'
 import { times } from 'ramda'
 import {
-  historyEnhancer,
   initialHistoryState,
   redo,
+  reducerEnhancer,
   undo,
 } from './undoManager'
 
@@ -39,7 +39,7 @@ function selectPreviousLine(state) {
   return state
 }
 
-export const rootReducer = historyEnhancer(reducer)
+export const rootReducer = reducerEnhancer(reducer)
 
 export function reducer(state, action) {
   // console.log(`state,action`, state, action)
