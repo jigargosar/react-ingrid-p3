@@ -7,17 +7,13 @@ import {
 } from './actions'
 import nanoid from 'nanoid'
 import faker from 'faker'
+import { times } from 'ramda'
 import {
-  complement,
-  equals,
-  head,
-  lensPath,
-  omit,
-  over,
-  prepend,
-  tail,
-  times,
-} from 'ramda'
+  historyEnhancer,
+  initialHistoryState,
+  redo,
+  undo,
+} from './undoManager'
 
 function sNext(state) {
   const idx = state.lines.findIndex(l => l.id === state.selectedId)
@@ -41,58 +37,6 @@ function sPrev(state) {
     }
   }
   return state
-}
-
-const initialHistoryState = { undoStack: [], redoStack: [] }
-
-function undo(state) {
-  const { history, ...stateWithoutHistory } = state
-  const { undoStack, redoStack } = history
-  const lastState = head(undoStack)
-  if (lastState) {
-    const newHistory = {
-      undoStack: tail(undoStack),
-      redoStack: prepend(stateWithoutHistory, redoStack),
-    }
-    return { ...state, ...lastState, history: newHistory }
-  }
-  return state
-}
-
-function redo(state) {
-  const { history, ...stateWithoutHistory } = state
-  const { undoStack, redoStack } = history
-  const nextState = head(redoStack)
-  if (nextState) {
-    const newHistory = {
-      undoStack: prepend(stateWithoutHistory, undoStack),
-      redoStack: tail(redoStack),
-    }
-    return { ...state, ...nextState, history: newHistory }
-  }
-  return state
-}
-
-const historyEnhancer = reducer => {
-  const overHistory = over(lensPath(['history']))
-  const omitHistory = omit(['history'])
-  const notEquals = complement(equals)
-  return (oldState, action) => {
-    const newState = reducer(oldState, action)
-
-    const newStateWithoutHistory = omitHistory(newState)
-    const oldStateWithoutHistory = omitHistory(oldState)
-    if (notEquals(oldStateWithoutHistory, newStateWithoutHistory)) {
-      return overHistory(({ undoStack } = initialHistoryState) => {
-        return {
-          undoStack: prepend(oldStateWithoutHistory, undoStack),
-          redoStack: [],
-        }
-      })(newState)
-    }
-
-    return newState
-  }
 }
 
 export const rootReducer = historyEnhancer(reducer)
