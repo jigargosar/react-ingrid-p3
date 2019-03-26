@@ -1,13 +1,17 @@
 import { useEffect } from 'react'
-import { find, toPairs } from 'ramda'
+import { compose, find, isNil, nth, toPairs, unless } from 'ramda'
 import isHotkey from 'is-hotkey'
 
 function findHotKeyHandler(e, km) {
-  return find(([key, handler]) => {
-    if (isHotkey(key, e)) {
-      return handler
-    }
-  })(toPairs(km))
+  return compose(
+    unless(isNil, nth(1)),
+    find(([key, handler]) => {
+      if (isHotkey(key, e)) {
+        return handler
+      }
+    }),
+    toPairs,
+  )(km)
 }
 
 export function useHotKeyDispatcher(currentHotKeyMap, dispatch) {
