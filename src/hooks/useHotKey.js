@@ -5,11 +5,7 @@ import isHotkey from 'is-hotkey'
 function findHotKeyHandler(e, km) {
   return compose(
     unless(isNil, nth(1)),
-    find(([key, handler]) => {
-      if (isHotkey(key, e)) {
-        return handler
-      }
-    }),
+    find(([key]) => isHotkey(key, e)),
     toPairs,
   )(km)
 }
