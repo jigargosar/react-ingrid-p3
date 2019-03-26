@@ -25,19 +25,19 @@ function cachedState() {
 }
 
 function selectLineAction(line, dispatch) {
-  dispatch({ action: 'sl', line })
+  dispatch({ type: 'sl', line })
 }
 
 function selectNextAction(dispatch) {
-  dispatch({ action: 'sNext'})
+  dispatch({ type: 'sNext'})
 }
 
 function selectPrevAction(dispatch) {
-  dispatch({ action: 'sPrev'})
+  dispatch({ type: 'sPrev'})
 }
 
 function rootReducer(state, action) {
-  console.log(`state,action`, state, action)
+  // console.log(`state,action`, state, action)
   switch (action.type) {
     case 'sl':
       return {...state, selectedId:action.line.id}
