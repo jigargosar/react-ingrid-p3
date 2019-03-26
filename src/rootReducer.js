@@ -60,6 +60,20 @@ function undo(state) {
   return state
 }
 
+function redo(state) {
+  const { history, ...stateWithoutHistory } = state
+  const { undoStack, redoStack } = history
+  const lastState = head(undoStack)
+  if (lastState) {
+    const newHistory = {
+      undoStack: tail(undoStack),
+      redoStack: prepend(stateWithoutHistory, redoStack),
+    }
+    return assoc('history', newHistory)(state)
+  }
+  return state
+}
+
 const historyEnhancer = reducer => {
   const overHistory = over(lensPath(['history']))
   const omitHistory = omit(['history'])
@@ -69,14 +83,12 @@ const historyEnhancer = reducer => {
 
     const newStateWithoutHistory = omitHistory(newState)
     if (notEquals(omitHistory(oldState), newStateWithoutHistory)) {
-      return overHistory(
-        ({ undoStack, redoStack } = initialHistoryState) => {
-          return {
-            undoStack: prepend(newStateWithoutHistory, undoStack),
-            redoStack: [],
-          }
-        },
-      )
+      return overHistory(({ undoStack } = initialHistoryState) => {
+        return {
+          undoStack: prepend(newStateWithoutHistory, undoStack),
+          redoStack: [],
+        }
+      })(newState)
     }
 
     return newState
