@@ -37,9 +37,16 @@ function Line({ line, isSelected, dispatch }) {
 
 function App() {
 
-  const [state, dispatch] = useReducer((action, state)=>{
-    console.log(`action,state`, action, state)
+  const [state, dispatch] = useReducer((state, action)=>{
+    console.log(`state,action`, state, action)
+    switch (action.type) {
+      case 'sl':
+        break
+      default :
+        console.error("Unknown action.type", action.type)
 
+    }
+    return state
   },cachedState() || initialState())
 
   useEffect(() => {
