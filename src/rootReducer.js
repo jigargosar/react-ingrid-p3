@@ -1,13 +1,22 @@
-import { SELECT_LINE, SELECT_NEXT_LINE, SELECT_PREV_LINE } from './actions'
+import {
+  REDO,
+  SELECT_LINE,
+  SELECT_NEXT_LINE,
+  SELECT_PREV_LINE,
+  UNDO,
+} from './actions'
 import nanoid from 'nanoid'
 import faker from 'faker'
 import {
+  assoc,
   complement,
   equals,
+  head,
   lensPath,
   omit,
   over,
   prepend,
+  tail,
   times,
 } from 'ramda'
 
@@ -37,10 +46,24 @@ function sPrev(state) {
 
 const initialHistoryState = { undoStack: [], redoStack: [] }
 
+function undo(state) {
+  const { history, ...stateWithoutHistory } = state
+  const { undoStack, redoStack } = history
+  const lastState = head(undoStack)
+  if (lastState) {
+    const newHistory = {
+      undoStack: tail(undoStack),
+      redoStack: prepend(stateWithoutHistory, redoStack),
+    }
+    return assoc('history', newHistory)(state)
+  }
+  return state
+}
+
 const historyEnhancer = reducer => {
+  const overHistory = over(lensPath(['history']))
   const omitHistory = omit(['history'])
   const notEquals = complement(equals)
-  const overHistory = over(lensPath(['history']))
   return (oldState, action) => {
     const newState = reducer(oldState, action)
 
@@ -72,6 +95,10 @@ export function reducer(state, action) {
       return sNext(state)
     case SELECT_PREV_LINE:
       return sPrev(state)
+    case UNDO:
+      return undo(state)
+    case REDO:
+      return redo(state)
     default:
       console.error('Unknown action.type', action.type)
   }
