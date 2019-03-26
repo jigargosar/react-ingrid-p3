@@ -3,22 +3,7 @@ import { initialState, rootReducer } from './rootReducer'
 import { selectNextAction, selectPrevAction } from './actions'
 import { useHotKeyDispatcher } from './hooks/useHotKey'
 import { getCached, useCacheEffect } from './hooks/useCacheEffect'
-import { Line } from './components/Line'
-
-function LineList({ state, dispatch }) {
-  return state.lines.map(line => {
-    const isSelected = line.id === state.selectedId
-
-    return (
-      <Line
-        key={line.id}
-        line={line}
-        isSelected={isSelected}
-        dispatch={dispatch}
-      />
-    )
-  })
-}
+import { LineList } from './components/LineList'
 
 function useRootState() {
   const cacheKey = 'react-ingrid-p3'

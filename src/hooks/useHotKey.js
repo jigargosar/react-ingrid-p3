@@ -1,13 +1,13 @@
 import { useEffect } from 'react'
-import { reduce, reduced } from 'ramda'
+import { find, toPairs } from 'ramda'
 import isHotkey from 'is-hotkey'
 
 function findHotKeyHandler(e, km) {
-  return reduce((handler, key) => {
+  return find(([key, handler]) => {
     if (isHotkey(key, e)) {
-      return reduced(handler)
+      return handler
     }
-  })(km)
+  })(toPairs(km))
 }
 
 export function useHotKeyDispatcher(currentHotKeyMap, dispatch) {
@@ -20,7 +20,6 @@ export function useHotKeyDispatcher(currentHotKeyMap, dispatch) {
         e.preventDefault()
         handler(dispatch)
       }
-
     }
 
     return () => {
