@@ -2,6 +2,7 @@ import React, { useEffect, useLayoutEffect, useReducer, useRef } from 'react'
 import isHotkey from 'is-hotkey'
 import { initialState, rootReducer } from './rootReducer'
 import { selectLineAction, selectNextAction, selectPrevAction } from './actions'
+import { forEachObjIndexed } from 'ramda'
 
 function cachedState() {
   const jsonString = localStorage.getItem('react-ingrid-p3')
@@ -37,11 +38,16 @@ function App() {
 
   useEffect(() => {
     window.addEventListener('keydown', e => {
-      if (isHotkey('up', e)) {
-        selectPrevAction(dispatch)
-      } else if (isHotkey('down', e)) {
-        selectNextAction(dispatch)
-      }
+
+      const km = { up: selectPrevAction, down: selectNextAction }
+
+      forEachObjIndexed((fn, key) => {
+        if (isHotkey(key, e)) {
+          e.preventDefault()
+          fn(dispatch)
+        }
+      })(km)
+
     })
   }, [])
 
