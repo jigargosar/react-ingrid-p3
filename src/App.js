@@ -9,16 +9,21 @@ function newLine() {
 
 function App() {
   const [state, setState] = useState(()=>{
+    let lines = times(newLine, 10)
     return {
-      lines:times(newLine, 10)
+      lines,
+      selectedId:lines[0].id
     }
   })
   return (
-    <div className="min-vh-100 pv3">
+    <div className="min-vh-100 pv3 ph2">
       <div className="code">
         {state.lines.map(line => {
+          const isSelected = line.id === state.selectedId
 
-          return <div key={line.id} className="lh-copy ph3">
+          let cc = `${isSelected ? "bg-blue white" : ""}`
+
+          return <div key={line.id} className={`lh-copy ph3 br2 ${cc}`}>
             {line.title}
           </div>
         })}
