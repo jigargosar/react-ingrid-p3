@@ -8,7 +8,6 @@ import {
 import nanoid from 'nanoid'
 import faker from 'faker'
 import {
-  assoc,
   complement,
   equals,
   head,
@@ -55,7 +54,7 @@ function undo(state) {
       undoStack: tail(undoStack),
       redoStack: prepend(stateWithoutHistory, redoStack),
     }
-    return assoc('history', newHistory)(state)
+    return { ...state, ...lastState, history: newHistory }
   }
   return state
 }
@@ -63,13 +62,13 @@ function undo(state) {
 function redo(state) {
   const { history, ...stateWithoutHistory } = state
   const { undoStack, redoStack } = history
-  const lastState = head(undoStack)
-  if (lastState) {
+  const nextState = head(redoStack)
+  if (nextState) {
     const newHistory = {
-      undoStack: tail(undoStack),
-      redoStack: prepend(stateWithoutHistory, redoStack),
+      undoStack: prepend(stateWithoutHistory, undoStack),
+      redoStack: tail(redoStack),
     }
-    return assoc('history', newHistory)(state)
+    return { ...state, ...nextState, history: newHistory }
   }
   return state
 }
