@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useReducer } from 'react'
 import nanoid from 'nanoid'
 import faker from 'faker'
 import { times } from 'ramda'
@@ -23,13 +23,30 @@ function cachedState() {
   return null
 }
 
+function Line({ line, isSelected, dispatch }) {
+
+  let sc = `${isSelected ? 'bg-blue white' : ''}`
+
+  return <div key={line.id} className={`lh-copy ph3 br2 ${sc}`}
+              tabIndex={0}
+              onFocus={() => dispatch({action:"sl", line})}
+  >
+    {line.title}
+  </div>
+}
+
 function App() {
 
-  const [state, setState] = useState(() => cachedState() || initialState())
+  const [state, dispatch] = useReducer((action, state)=>{
+    console.log(`action,state`, action, state)
+
+  },cachedState() || initialState())
 
   useEffect(() => {
     localStorage.setItem('react-ingrid-p3', JSON.stringify(state))
   }, [state])
+
+
 
   return (
     <div className="min-vh-100 pv3 ph2">
@@ -37,16 +54,8 @@ function App() {
         {state.lines.map(line => {
           const isSelected = line.id === state.selectedId
 
-          let cc = `${isSelected ? 'bg-blue white' : ''}`
-
-          return <div key={line.id} className={`lh-copy ph3 br2 ${cc}`}
-                      tabIndex={0}
-                      onFocus={() => setState(s => {
-                        return { ...s, selectedId: line.id }
-                      })}
-          >
-            {line.title}
-          </div>
+          return <Line key={line.id} line={line} isSelected={isSelected} dispatch={dispatch}
+          />
         })}
 
       </div>
