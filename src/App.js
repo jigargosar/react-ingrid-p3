@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react'
+import React, { useEffect, useLayoutEffect, useReducer, useRef } from 'react'
 import nanoid from 'nanoid'
 import faker from 'faker'
 import { times } from 'ramda'
@@ -78,8 +78,15 @@ function rootReducer(state, action) {
 function Line({ line, isSelected, dispatch }) {
 
   let sc = `${isSelected ? 'bg-blue white' : ''}`
+  const ref = useRef()
 
-  return <div key={line.id} className={`lh-copy ph3 br2 ${sc}`}
+  useLayoutEffect(()=>{
+    const el = ref.current
+    if(isSelected&& el){el.focus()}
+  },[isSelected])
+
+
+  return <div ref={ref} key={line.id} className={`lh-copy ph3 br2 ${sc}`}
               tabIndex={0}
               onFocus={() => selectLineAction(line, dispatch)}
   >
