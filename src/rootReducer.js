@@ -1,3 +1,5 @@
+import { SELECT_LINE, SELECT_NEXT_LINE, SELECT_PREV_LINE } from './actions'
+
 function sNext(state) {
   const idx = state.lines.findIndex(l => l.id === state.selectedId)
   if (idx > -1) {
@@ -25,11 +27,11 @@ function sPrev(state) {
 export function rootReducer(state, action) {
   // console.log(`state,action`, state, action)
   switch (action.type) {
-    case 'sl':
+    case SELECT_LINE:
       return { ...state, selectedId: action.line.id }
-    case 'sNext':
+    case SELECT_NEXT_LINE:
       return sNext(state)
-    case 'sPrev':
+    case SELECT_PREV_LINE:
       return sPrev(state)
     default :
       console.error('Unknown action.type', action.type)
