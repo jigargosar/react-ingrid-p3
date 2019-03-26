@@ -29,7 +29,7 @@ function Line({ line, isSelected, dispatch }) {
 
   return <div key={line.id} className={`lh-copy ph3 br2 ${sc}`}
               tabIndex={0}
-              onFocus={() => dispatch({action:"sl", line})}
+              onFocus={() => dispatch({ action: 'sl', line })}
   >
     {line.title}
   </div>
@@ -37,23 +37,20 @@ function Line({ line, isSelected, dispatch }) {
 
 function App() {
 
-  const [state, dispatch] = useReducer((state, action)=>{
+  const [state, dispatch] = useReducer((state, action) => {
     console.log(`state,action`, state, action)
     switch (action.type) {
       case 'sl':
         break
       default :
-        console.error("Unknown action.type", action.type)
-
+        console.error('Unknown action.type', action.type)
     }
     return state
-  },cachedState() || initialState())
+  }, null, () => cachedState() || initialState())
 
   useEffect(() => {
     localStorage.setItem('react-ingrid-p3', JSON.stringify(state))
   }, [state])
-
-
 
   return (
     <div className="min-vh-100 pv3 ph2">
