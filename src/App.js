@@ -29,28 +29,51 @@ function selectLineAction(line, dispatch) {
 }
 
 function selectNextAction(dispatch) {
-  dispatch({ type: 'sNext'})
+  dispatch({ type: 'sNext' })
 }
 
 function selectPrevAction(dispatch) {
-  dispatch({ type: 'sPrev'})
+  dispatch({ type: 'sPrev' })
+}
+
+function sNext(state) {
+  const idx = state.lines.findIndex(l => l.id === state.selectedId)
+  if (idx > -1) {
+    const newIdx = idx + 1
+    if (newIdx >= 0 && newIdx < state.lines.length) {
+      const newSelectedId = state.lines[newIdx].id
+      return { ...state, selectedId: newSelectedId }
+    }
+  }
+  return state
+}
+
+function sPrev(state) {
+  const idx = state.lines.findIndex(l => l.id === state.selectedId)
+  if (idx > -1) {
+    const newIdx = idx - 1
+    if (newIdx >= 0 && newIdx < state.lines.length) {
+      const newSelectedId = state.lines[newIdx].id
+      return { ...state, selectedId: newSelectedId }
+    }
+  }
+  return state
 }
 
 function rootReducer(state, action) {
   // console.log(`state,action`, state, action)
   switch (action.type) {
     case 'sl':
-      return {...state, selectedId:action.line.id}
+      return { ...state, selectedId: action.line.id }
     case 'sNext':
-      break
+      return sNext(state)
     case 'sPrev':
-      break
+      return sPrev(state)
     default :
       console.error('Unknown action.type', action.type)
   }
   return state
 }
-
 
 function Line({ line, isSelected, dispatch }) {
 
@@ -58,7 +81,7 @@ function Line({ line, isSelected, dispatch }) {
 
   return <div key={line.id} className={`lh-copy ph3 br2 ${sc}`}
               tabIndex={0}
-              onFocus={() => selectLineAction(line , dispatch)}
+              onFocus={() => selectLineAction(line, dispatch)}
   >
     {line.title}
   </div>
@@ -68,15 +91,15 @@ function App() {
 
   const [state, dispatch] = useReducer(rootReducer, null, () => cachedState() || initialState())
 
-  useEffect(()=>{
-    window.addEventListener('keydown',e=>{
-      if(isHotkey('up', e)){
-        selectPrevAction()
-      }else if(isHotkey('down', e)){
-        selectNextAction()
+  useEffect(() => {
+    window.addEventListener('keydown', e => {
+      if (isHotkey('up', e)) {
+        selectPrevAction(dispatch)
+      } else if (isHotkey('down', e)) {
+        selectNextAction(dispatch)
       }
     })
-  },[])
+  }, [])
 
   useEffect(() => {
     localStorage.setItem('react-ingrid-p3', JSON.stringify(state))
