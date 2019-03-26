@@ -23,13 +23,29 @@ function cachedState() {
   return null
 }
 
+function selectLineAction(line, dispatch) {
+  dispatch({ action: 'sl', line })
+}
+
+function rootReducer(state, action) {
+  console.log(`state,action`, state, action)
+  switch (action.type) {
+    case 'sl':
+      break
+    default :
+      console.error('Unknown action.type', action.type)
+  }
+  return state
+}
+
+
 function Line({ line, isSelected, dispatch }) {
 
   let sc = `${isSelected ? 'bg-blue white' : ''}`
 
   return <div key={line.id} className={`lh-copy ph3 br2 ${sc}`}
               tabIndex={0}
-              onFocus={() => dispatch({ action: 'sl', line })}
+              onFocus={() => selectLineAction(line , dispatch)}
   >
     {line.title}
   </div>
@@ -37,16 +53,8 @@ function Line({ line, isSelected, dispatch }) {
 
 function App() {
 
-  const [state, dispatch] = useReducer((state, action) => {
-    console.log(`state,action`, state, action)
-    switch (action.type) {
-      case 'sl':
-        break
-      default :
-        console.error('Unknown action.type', action.type)
-    }
-    return state
-  }, null, () => cachedState() || initialState())
+  const [state, dispatch] = useReducer(rootReducer, null, () => cachedState() || initialState())
+
 
   useEffect(() => {
     localStorage.setItem('react-ingrid-p3', JSON.stringify(state))
