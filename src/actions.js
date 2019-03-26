@@ -19,6 +19,7 @@ export function selectPrevAction(dispatch) {
 export function undoAction(dispatch) {
   dispatch({ type: UNDO })
 }
+
 export function redoAction(dispatch) {
   dispatch({ type: REDO })
 }
