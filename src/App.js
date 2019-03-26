@@ -49,10 +49,10 @@ function App() {
 
       const km = { up: selectPrevAction, down: selectNextAction }
 
-      const action = findHotKeyHandler(e, km)
-      if (action) {
+      const handler = findHotKeyHandler(e, km)
+      if (handler) {
         e.preventDefault()
-        dispatch(action)
+        handler(dispatch)
       }
 
     })
