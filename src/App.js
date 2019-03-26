@@ -1,28 +1,29 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import nanoid from 'nanoid'
+import faker from 'faker'
+import { times } from 'ramda'
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+function newLine() {
+  return { id: `id_${nanoid()}`, title: faker.name.lastName() }
+}
+
+function App() {
+  const [state, setState] = useState(()=>{
+    return {
+      lines:times(newLine, 10)
+    }
+  })
+  return (
+    <div className="code">
+      {state.lines.map(line=>{
+
+        return <div key={line.id} className="lh-copy ph3">
+          {line.title}
+        </div>
+      })}
+
+    </div>
+  )
 }
 
 export default App;
