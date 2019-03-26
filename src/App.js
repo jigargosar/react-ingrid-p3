@@ -40,7 +40,7 @@ function rootReducer(state, action) {
   console.log(`state,action`, state, action)
   switch (action.type) {
     case 'sl':
-      break
+      return {...state, selectedId:action.line.id}
     case 'sNext':
       break
     case 'sPrev':
