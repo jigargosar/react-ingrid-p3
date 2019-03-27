@@ -43,8 +43,7 @@ function selectNextLine(state) {
 
 function _selectedLineIndex(state) {
   const { lines, selectedId } = state
-  const idx = lines.findIndex(l => l.id === selectedId)
-  return idx
+  return lines.findIndex(l => l.id === selectedId)
 }
 
 function selectPreviousLine(state) {
