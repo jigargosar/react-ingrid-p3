@@ -8,7 +8,7 @@ import {
 export function Line({ line, isSelected, isEditing, dispatch }) {
   const sc = `${isSelected ? 'bg-blue white' : ''}`
   const ref = useRef()
-  // const onFocusHandler = () => selectLineAction(line, dispatch)
+  const onFocusHandler = () => selectLineAction(line, dispatch)
   const onTitleClickHandler = () => selectLineAction(line, dispatch)
 
   useLayoutEffect(() => {
@@ -35,7 +35,7 @@ export function Line({ line, isSelected, isEditing, dispatch }) {
           ref={ref}
           className={`flex-grow-1 lh-copy ph2 br2 ${sc}`}
           tabIndex={0}
-          // onFocus={onFocusHandler}
+          onFocus={onFocusHandler}
           onClick={onTitleClickHandler}
         >
           {line.title}
