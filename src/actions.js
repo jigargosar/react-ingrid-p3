@@ -9,6 +9,10 @@ export const SELECT_PREV_LINE = Symbol('SELECT_PREV_LINE')
 export const UNDO = Symbol('UNDO')
 export const REDO = Symbol('REDO')
 
+export const SET_POUCH_HISTORY_CONNECTED = Symbol(
+  'SET_POUCH_HISTORY_CONNECTED',
+)
+
 export function selectLineAction(line, dispatch) {
   dispatch({ type: SELECT_LINE, payload: { line } })
 }
@@ -47,4 +51,8 @@ export function stopEditSelectedLineAction(dispatch) {
 
 export function setEditingLineTitleAction(dispatch, title) {
   dispatch({ type: SET_EDITING_LINE_CONTENT, payload: { title } })
+}
+
+export function setPouchHistoryConnected(dispatch, info) {
+  dispatch({ type: SET_POUCH_HISTORY_CONNECTED, payload: { info } })
 }
