@@ -5,7 +5,13 @@ import {
   stopEditSelectedLineAction,
 } from '../actions'
 
-export function Line({ line, isSelected, isEditing, dispatch }) {
+export function Line({
+  line,
+  isSelected,
+  isEditing,
+  isEditingSelected,
+  dispatch,
+}) {
   const sc = `${isSelected ? 'bg-blue white' : ''}`
   const ref = useRef()
   const onFocusHandler = () => selectLineAction(line, dispatch)
@@ -34,7 +40,7 @@ export function Line({ line, isSelected, isEditing, dispatch }) {
         <div
           ref={ref}
           className={`flex-grow-1 lh-copy ph2 br2 ${sc}`}
-          tabIndex={0}
+          tabIndex={isEditingSelected ? null : 0}
           onFocus={onFocusHandler}
           onClick={onTitleClickHandler}
         >
