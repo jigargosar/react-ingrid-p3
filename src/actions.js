@@ -61,7 +61,7 @@ export function setPouchHistoryConnectedAction(dispatch, info) {
   dispatch({ type: SET_POUCH_HISTORY_CONNECTED, payload: { info } })
 }
 
-export function setPouchHistoryConnectionError(dispatch, error) {
+export function pouchHistoryConnectionErrorAction(dispatch, error) {
   dispatch({
     type: SET_POUCH_HISTORY_CONNECTION_ERROR,
     payload: { error },

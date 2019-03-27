@@ -1,12 +1,14 @@
-import React, { useReducer } from 'react'
+import React, { useEffect, useReducer } from 'react'
 import { initialState, rootReducer } from './rootReducer'
 import {
   deleteSelectedLineAction,
   editSelectedLineAction,
   newLineAction,
+  pouchHistoryConnectionErrorAction,
   redoAction,
   selectNextAction,
   selectPrevAction,
+  setPouchHistoryConnectedAction,
   stopEditSelectedLineAction,
   undoAction,
 } from './actions'
@@ -18,6 +20,7 @@ import {
 import { LineList } from './components/LineList'
 import 'react-toastify/dist/ReactToastify.css'
 import { toast } from 'react-toastify'
+import { pouchHistoryDB } from './pouchHistoryManager'
 
 function currentHotKeyMap(isEditingSelected) {
   const keyMap = {
@@ -51,6 +54,21 @@ function useStartApp() {
 
 function App() {
   const [state, dispatch] = useStartApp()
+
+  useEffect(() => {
+    pouchHistoryDB
+      .info()
+      .then(info => {
+        console.debug(info)
+        setPouchHistoryConnectedAction(dispatch, info)
+        toast(`Connected to ${info.db_name}`)
+      })
+      .catch(e => {
+        console.error(e)
+        pouchHistoryConnectionErrorAction(dispatch, e)
+        toast('Error connecting to Local Couch History')
+      })
+  }, [])
 
   return (
     <div className="min-vh-100 pv3 ph2">
