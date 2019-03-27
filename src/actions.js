@@ -1,5 +1,6 @@
 export const NEW_LINE = Symbol('NEW_LINE')
 export const DELETE_SELECTED_LINE = Symbol('DELETE_SELECTED_LINE')
+export const EDIT_SELECTED_LINE = Symbol('EDIT_SELECTED_LINE')
 export const SELECT_LINE = Symbol('SELECT_LINE')
 export const SELECT_NEXT_LINE = Symbol('SELECT_NEXT_LINE')
 export const SELECT_PREV_LINE = Symbol('SELECT_PREV_LINE')
@@ -32,4 +33,8 @@ export function newLineAction(dispatch) {
 
 export function deleteSelectedLineAction(dispatch) {
   dispatch({ type: DELETE_SELECTED_LINE })
+}
+
+export function editSelectedLineAction(dispatch) {
+  dispatch({ type: EDIT_SELECTED_LINE })
 }
