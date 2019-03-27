@@ -40,7 +40,7 @@ export function Line({
         <div
           ref={ref}
           className={`flex-grow-1 lh-copy ph2 br2 ${sc}`}
-          tabIndex={isEditingSelected ? null : 0}
+          tabIndex={isSelected ? 0 : null}
           onFocus={onFocusHandler}
           onClick={onTitleClickHandler}
         >
