@@ -11,13 +11,16 @@ import {
 import { useHotKeyDispatcher } from './hooks/useHotKey'
 import { getCached, useCacheEffect } from './hooks/useCacheEffect'
 import { LineList } from './components/LineList'
+import { compose, defaultTo, mergeDeepRight } from 'ramda'
 
 function useStartApp() {
   const cacheKey = 'react-ingrid-p3'
-  const [state, dispatch] = useReducer(
-    rootReducer,
-    null,
-    () => getCached(cacheKey) || initialState(),
+  const [state, dispatch] = useReducer(rootReducer, null, () =>
+    compose(
+      mergeDeepRight(initialState()),
+      defaultTo({}),
+      getCached,
+    )(cacheKey),
   )
   useCacheEffect(cacheKey, state)
 
