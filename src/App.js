@@ -18,7 +18,7 @@ import { LineList } from './components/LineList'
 function useStartApp() {
   const cacheKey = 'react-ingrid-p3'
   const [state, dispatch] = useReducer(rootReducer, null, () =>
-    getCachedAndMerge(initialState()),
+    getCachedAndMerge(initialState(), 'react-ingrid-p3'),
   )
   usePersistToLocalStorage(cacheKey, state)
 
