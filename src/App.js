@@ -10,7 +10,7 @@ import {
 } from './actions'
 import { useHotKeyDispatcher } from './hooks/useHotKey'
 import {
-  getCachedAndMerge,
+  getLocalStorageAndMerge,
   usePersistToLocalStorage,
 } from './hooks/usePersistToLocalStorage'
 import { LineList } from './components/LineList'
@@ -19,7 +19,7 @@ function useStartApp() {
   const cacheKey = 'react-ingrid-p3'
   const [state, dispatch] = useReducer(
     rootReducer,
-    getCachedAndMerge('react-ingrid-p3', initialState()),
+    getLocalStorageAndMerge('react-ingrid-p3', initialState()),
   )
 
   usePersistToLocalStorage(cacheKey, state)
