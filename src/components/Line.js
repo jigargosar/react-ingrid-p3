@@ -1,12 +1,16 @@
-import React, { useLayoutEffect, useRef } from 'react'
-import { selectLineAction, setEditingLineTitleAction } from '../actions'
+import React, { useEffect, useRef } from 'react'
+import {
+  selectLineAction,
+  setEditingLineTitleAction,
+  stopEditSelectedLineAction,
+} from '../actions'
 
 export function Line({ line, isSelected, isEditing, dispatch }) {
   const sc = `${isSelected ? 'bg-blue white' : ''}`
   const ref = useRef()
   const onFocusHandler = () => selectLineAction(line, dispatch)
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const el = ref.current
     if (isSelected && el) {
       el.focus()
@@ -20,6 +24,7 @@ export function Line({ line, isSelected, isEditing, dispatch }) {
           ref={ref}
           className={`flex-grow-1 lh-copy pv0 ph2 bn br2`}
           onFocus={onFocusHandler}
+          onBlur={() => stopEditSelectedLineAction(dispatch)}
           value={line.title}
           onChange={e =>
             setEditingLineTitleAction(dispatch, e.target.value)
