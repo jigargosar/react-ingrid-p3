@@ -1,4 +1,5 @@
 import {
+  DELETE_SELECTED_LINE,
   NEW_LINE,
   REDO,
   SELECT_LINE,
@@ -8,7 +9,15 @@ import {
 } from './actions'
 import nanoid from 'nanoid'
 import faker from 'faker'
-import { assocPath, compose, insert, lensPath, over, times } from 'ramda'
+import {
+  assocPath,
+  compose,
+  insert,
+  lensPath,
+  over,
+  remove,
+  times,
+} from 'ramda'
 import {
   initialHistoryState,
   redo,
@@ -73,6 +82,25 @@ function addNewLineAfterSelected(state) {
   }
 }
 
+function deleteSelectedLine(state) {
+  if (state.lines.length === 1) {
+    return state
+  }
+
+  const idx = _selectedLineIndex(state)
+  const nextSelectedIdx =
+    idx === state.lines.length - 1 ? idx - 1 : idx + 1
+  const nextSelectedId = state.lines[nextSelectedIdx].id
+
+  if (idx >= 0) {
+    return compose(
+      assocSelectedId(nextSelectedId),
+      overLines(remove(idx, 1)),
+    )(state)
+  }
+  return state
+}
+
 export const rootReducer = reducerEnhancer(reducer)
 
 export function reducer(state, action) {
@@ -81,6 +109,9 @@ export function reducer(state, action) {
   switch (action.type) {
     case NEW_LINE:
       return addNewLineAfterSelected(state)
+    case DELETE_SELECTED_LINE:
+      const nextState = deleteSelectedLine(state)
+      return nextState
     case SELECT_LINE:
       return { ...state, selectedId: payload.line.id }
     case SELECT_NEXT_LINE:
