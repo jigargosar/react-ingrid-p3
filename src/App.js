@@ -7,6 +7,7 @@ import {
   redoAction,
   selectNextAction,
   selectPrevAction,
+  stopEditSelectedLineAction,
   undoAction,
 } from './actions'
 import { useHotKeyDispatcher } from './hooks/useHotKey'
@@ -33,6 +34,7 @@ function useStartApp() {
     enter: newLineAction,
     delete: deleteSelectedLineAction,
     space: editSelectedLineAction,
+    esc: stopEditSelectedLineAction,
   })
 
   useHotKeyDispatcher(currentHotKeyMap, dispatch)
