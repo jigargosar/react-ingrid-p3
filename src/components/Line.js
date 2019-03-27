@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useLayoutEffect, useRef } from 'react'
 import {
   selectLineAction,
   setEditingLineTitleAction,
@@ -14,10 +14,9 @@ export const Line = React.memo(
   ({ line, isSelected, isEditing, dispatch }) => {
     const sc = `${isSelected ? 'bg-blue white' : ''}`
     const ref = useRef()
-    const onFocusHandler = () => selectLineAction(line, dispatch)
-    const onTitleClickHandler = () => selectLineAction(line, dispatch)
+    const onFocusOrClickHandler = () => selectLineAction(line, dispatch)
 
-    useEffect(() => {
+    useLayoutEffect(() => {
       const el = ref.current
       if (isSelected && el) {
         console.log(`'focusing'`, 'focusing')
@@ -48,8 +47,8 @@ export const Line = React.memo(
             ref={ref}
             className={`lh-copy ph2 br2 ${sc}`}
             tabIndex={isSelected ? 0 : null}
-            onFocus={onFocusHandler}
-            onClick={onTitleClickHandler}
+            onFocus={onFocusOrClickHandler}
+            onClick={onFocusOrClickHandler}
           >
             {displayTitle}
           </div>
