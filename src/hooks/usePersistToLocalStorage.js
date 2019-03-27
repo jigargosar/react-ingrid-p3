@@ -19,7 +19,7 @@ function getCachedOrEmptyObj(key) {
   return defaultTo({}, getCached(key))
 }
 
-export function getLocalStorageAndMerge(cacheKey, stateToMerge) {
+export function localStorageGetAndMerge(cacheKey, stateToMerge) {
   return compose(
     mergeDeepRight(stateToMerge),
     getCachedOrEmptyObj,
