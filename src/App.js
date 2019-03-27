@@ -16,6 +16,8 @@ import {
   useLocalStorageSet,
 } from './hooks/useLocalStorageSet'
 import { LineList } from './components/LineList'
+import 'react-toastify/dist/ReactToastify.css'
+import { toast } from 'react-toastify'
 
 function currentHotKeyMap(isEditingSelected) {
   const keyMap = {
@@ -52,6 +54,9 @@ function App() {
 
   return (
     <div className="min-vh-100 pv3 ph2">
+      <div>
+        <button onClick={() => toast('Boom!')}>toast</button>
+      </div>
       <div className="code">
         <LineList state={state} dispatch={dispatch} />
       </div>

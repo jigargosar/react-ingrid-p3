@@ -11,6 +11,7 @@
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
     "react-scripts": "2.1.8",
+    "react-toastify": "^5.0.0-rc.3",
     "tachyons": "^4.11.1"
   },
   "scripts": {
