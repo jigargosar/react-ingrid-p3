@@ -1,5 +1,6 @@
 import PouchDB from 'pouchdb-browser'
 import { toast } from 'react-toastify'
+import { assoc, lensPath, over } from 'ramda'
 
 const db = new PouchDB('http://127.0.0.1:5984/react-ingrid-p3-history')
 
@@ -17,4 +18,12 @@ export const initialPouchHistoryState = {
   connected: false,
 }
 
-function setPouchHistoryConnectedAction() {}
+const overPouchHistory = over(lensPath(['pouchHistory']))
+
+function setPouchHistoryConnectedAction(state) {
+  return overPouchHistory(assoc('connected', true))(state)
+}
+
+function setPouchHistoryConnectionError(state) {
+  return overPouchHistory(assoc('connected', false))(state)
+}

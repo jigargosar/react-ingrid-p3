@@ -13,6 +13,10 @@ export const SET_POUCH_HISTORY_CONNECTED = Symbol(
   'SET_POUCH_HISTORY_CONNECTED',
 )
 
+export const SET_POUCH_HISTORY_CONNECTION_ERROR = Symbol(
+  'SET_POUCH_HISTORY_CONNECTION_ERROR',
+)
+
 export function selectLineAction(line, dispatch) {
   dispatch({ type: SELECT_LINE, payload: { line } })
 }
@@ -55,4 +59,11 @@ export function setEditingLineTitleAction(dispatch, title) {
 
 export function setPouchHistoryConnectedAction(dispatch, info) {
   dispatch({ type: SET_POUCH_HISTORY_CONNECTED, payload: { info } })
+}
+
+export function setPouchHistoryConnectionError(dispatch, error) {
+  dispatch({
+    type: SET_POUCH_HISTORY_CONNECTION_ERROR,
+    payload: { error },
+  })
 }
