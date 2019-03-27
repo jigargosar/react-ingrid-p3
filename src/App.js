@@ -10,7 +10,7 @@ import { useHotKeyDispatcher } from './hooks/useHotKey'
 import { getCached, useCacheEffect } from './hooks/useCacheEffect'
 import { LineList } from './components/LineList'
 
-function useRootState() {
+function useStartApp() {
   const cacheKey = 'react-ingrid-p3'
   const [state, dispatch] = useReducer(
     rootReducer,
@@ -31,7 +31,7 @@ function useRootState() {
 }
 
 function App() {
-  const [state, dispatch] = useRootState()
+  const [state, dispatch] = useStartApp()
 
   return (
     <div className="min-vh-100 pv3 ph2">
