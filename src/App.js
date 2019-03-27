@@ -26,6 +26,7 @@ function useStartApp() {
     'meta+z': undoAction,
     'meta+shift+z': redoAction,
     enter: newLineAction,
+    delete: deleteSelectedLineAction(),
   })
 
   useHotKeyDispatcher(currentHotKeyMap, dispatch)
