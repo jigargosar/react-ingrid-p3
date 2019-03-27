@@ -4,6 +4,7 @@ import { selectLineAction } from '../actions'
 export function Line({ line, isSelected, isEditing, dispatch }) {
   const sc = `${isSelected ? 'bg-blue white' : ''}`
   const ref = useRef()
+  const onFocusHandler = () => selectLineAction(line, dispatch)
 
   useLayoutEffect(() => {
     const el = ref.current
@@ -15,22 +16,19 @@ export function Line({ line, isSelected, isEditing, dispatch }) {
   return (
     <>
       {isEditing ? (
-        <div
+        <input
           ref={ref}
-          key={line.id}
           className={`lh-copy ph3 br2 ${sc}`}
-          tabIndex={0}
-          onFocus={() => selectLineAction(line, dispatch)}
+          onFocus={onFocusHandler}
         >
           {line.title}
-        </div>
+        </input>
       ) : (
         <div
           ref={ref}
-          key={line.id}
           className={`lh-copy ph3 br2 ${sc}`}
           tabIndex={0}
-          onFocus={() => selectLineAction(line, dispatch)}
+          onFocus={onFocusHandler}
         >
           {line.title}
         </div>
