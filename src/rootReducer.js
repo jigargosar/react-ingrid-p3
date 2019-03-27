@@ -6,6 +6,7 @@ import {
   SELECT_LINE,
   SELECT_NEXT_LINE,
   SELECT_PREV_LINE,
+  SET_EDITING_LINE_CONTENT,
   UNDO,
 } from './actions'
 import nanoid from 'nanoid'
@@ -104,6 +105,19 @@ function deleteSelectedLine(state) {
   return state
 }
 
+function setEditingLineTitle(title, state) {
+  const idx = _selectedLineIndex(state)
+
+  if (idx > -1) {
+    return compose(
+      //
+      assocPath(['lines', idx, 'title'], title),
+    )(state)
+  }
+
+  return state
+}
+
 function reducer(state, action) {
   // console.log(`state,action`, state, action)
   const payload = action.payload
@@ -114,6 +128,8 @@ function reducer(state, action) {
       return deleteSelectedLine(state)
     case EDIT_SELECTED_LINE:
       return assoc('isEditingSelected', true)(state)
+    case SET_EDITING_LINE_CONTENT:
+      return setEditingLineTitle(payload.title, state)
     case SELECT_LINE:
       return { ...state, selectedId: payload.line.id }
     case SELECT_NEXT_LINE:
