@@ -12,7 +12,6 @@ export function LineList({ state, dispatch }) {
         line={line}
         isSelected={isSelected}
         isEditing={isEditing}
-        isEditingSelected={state.isEditingSelected}
         dispatch={dispatch}
       />
     )

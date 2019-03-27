@@ -5,13 +5,7 @@ import {
   stopEditSelectedLineAction,
 } from '../actions'
 
-export function Line({
-  line,
-  isSelected,
-  isEditing,
-  isEditingSelected,
-  dispatch,
-}) {
+export function Line({ line, isSelected, isEditing, dispatch }) {
   const sc = `${isSelected ? 'bg-blue white' : ''}`
   const ref = useRef()
   const onFocusHandler = () => selectLineAction(line, dispatch)
