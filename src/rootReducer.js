@@ -7,6 +7,7 @@ import {
   SELECT_NEXT_LINE,
   SELECT_PREV_LINE,
   SET_EDITING_LINE_CONTENT,
+  STOP_EDIT_SELECTED_LINE,
   UNDO,
 } from './actions'
 import nanoid from 'nanoid'
@@ -128,6 +129,8 @@ function reducer(state, action) {
       return deleteSelectedLine(state)
     case EDIT_SELECTED_LINE:
       return assoc('isEditingSelected', true)(state)
+    case STOP_EDIT_SELECTED_LINE:
+      return assoc('isEditingSelected', false)(state)
     case SET_EDITING_LINE_CONTENT:
       return setEditingLineTitle(payload.title, state)
     case SELECT_LINE:
