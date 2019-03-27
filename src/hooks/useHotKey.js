@@ -25,5 +25,5 @@ export function useHotKeyDispatcher(currentHotKeyMap, dispatch) {
     return () => {
       window.removeEventListener('keydown', listener)
     }
-  }, [])
+  }, [currentHotKeyMap])
 }
