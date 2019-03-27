@@ -10,19 +10,15 @@ import {
 } from './actions'
 import { useHotKeyDispatcher } from './hooks/useHotKey'
 import {
-  getCachedOrEmptyObj,
+  getCachedAndMerge,
   usePersistToLocalStorage,
 } from './hooks/usePersistToLocalStorage'
 import { LineList } from './components/LineList'
-import { compose, mergeDeepRight } from 'ramda'
 
 function useStartApp() {
   const cacheKey = 'react-ingrid-p3'
   const [state, dispatch] = useReducer(rootReducer, null, () =>
-    compose(
-      mergeDeepRight(initialState()),
-      getCachedOrEmptyObj,
-    )(cacheKey),
+    getCachedAndMerge(initialState()),
   )
   usePersistToLocalStorage(cacheKey, state)
 

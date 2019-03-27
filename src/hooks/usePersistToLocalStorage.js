@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { defaultTo } from 'ramda'
+import { compose, defaultTo, mergeDeepRight } from 'ramda'
 
 export function usePersistToLocalStorage(cacheKey, state) {
   useEffect(() => {
@@ -17,4 +17,11 @@ export function getCached(key) {
 
 export function getCachedOrEmptyObj(key) {
   return defaultTo({}, getCached(key))
+}
+
+export function getCachedAndMerge(stateToMerge, cacheKey) {
+  return compose(
+    mergeDeepRight(stateToMerge),
+    getCachedOrEmptyObj,
+  )(cacheKey)
 }
