@@ -18,6 +18,7 @@ import {
 import { LineList } from './components/LineList'
 import 'react-toastify/dist/ReactToastify.css'
 import { toast } from 'react-toastify'
+import PouchDB from 'pouchdb-browser'
 
 function currentHotKeyMap(isEditingSelected) {
   const keyMap = {
@@ -48,6 +49,18 @@ function useStartApp() {
   useHotKeyDispatcher(currentHotKeyMap(state.isEditingSelected), dispatch)
   return [state, dispatch]
 }
+
+const db = new PouchDB('http://127.0.0.1:5984/react-ingrid-p3-history')
+
+db.info()
+  .then(info => {
+    console.log(info)
+    toast('Connected to Local Couch history')
+  })
+  .catch(e => {
+    console.error(e)
+    toast('Error connecting to Local Couch History')
+  })
 
 function App() {
   const [state, dispatch] = useStartApp()
