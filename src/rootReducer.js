@@ -1,5 +1,6 @@
 import {
   DELETE_SELECTED_LINE,
+  EDIT_SELECTED_LINE,
   NEW_LINE,
   REDO,
   SELECT_LINE,
@@ -10,6 +11,7 @@ import {
 import nanoid from 'nanoid'
 import faker from 'faker'
 import {
+  assoc,
   assocPath,
   compose,
   insert,
@@ -110,6 +112,8 @@ function reducer(state, action) {
       return addNewLineAfterSelected(state)
     case DELETE_SELECTED_LINE:
       return deleteSelectedLine(state)
+    case EDIT_SELECTED_LINE:
+      return assoc('isEditingSelected', true)(state)
     case SELECT_LINE:
       return { ...state, selectedId: payload.line.id }
     case SELECT_NEXT_LINE:
