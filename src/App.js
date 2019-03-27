@@ -13,8 +13,8 @@ import {
 import { useHotKeyDispatcher } from './hooks/useHotKey'
 import {
   localStorageGetAndMerge,
-  usePersistToLocalStorage,
-} from './hooks/usePersistToLocalStorage'
+  useLocalStorageSet,
+} from './hooks/useLocalStorageSet'
 import { LineList } from './components/LineList'
 
 function useStartApp() {
@@ -24,7 +24,7 @@ function useStartApp() {
     localStorageGetAndMerge('react-ingrid-p3', initialState()),
   )
 
-  usePersistToLocalStorage(cacheKey, state)
+  useLocalStorageSet(cacheKey, state)
 
   const currentHotKeyMap = () => ({
     up: selectPrevAction,

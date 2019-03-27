@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { compose, defaultTo, mergeDeepRight } from 'ramda'
 
-export function usePersistToLocalStorage(cacheKey, state) {
+export function useLocalStorageSet(cacheKey, state) {
   useEffect(() => {
     localStorage.setItem(cacheKey, JSON.stringify(state))
   }, [state])
