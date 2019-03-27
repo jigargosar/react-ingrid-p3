@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useLayoutEffect, useRef } from 'react'
 import {
   selectLineAction,
   setEditingLineTitleAction,
@@ -10,7 +10,7 @@ export function Line({ line, isSelected, isEditing, dispatch }) {
   const ref = useRef()
   const onFocusHandler = () => selectLineAction(line, dispatch)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const el = ref.current
     if (isSelected && el) {
       el.focus()
