@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useRef } from 'react'
-import { selectLineAction } from '../actions'
+import { selectLineAction, setEditingLineTitleAction } from '../actions'
 
 export function Line({ line, isSelected, isEditing, dispatch }) {
   const sc = `${isSelected ? 'bg-blue white' : ''}`
@@ -20,9 +20,11 @@ export function Line({ line, isSelected, isEditing, dispatch }) {
           ref={ref}
           className={`lh-copy ph3 br2 ${sc}`}
           onFocus={onFocusHandler}
-        >
-          {line.title}
-        </input>
+          value={line.title}
+          onChange={e =>
+            setEditingLineTitleAction(dispatch, e.target.value)
+          }
+        />
       ) : (
         <div
           ref={ref}
