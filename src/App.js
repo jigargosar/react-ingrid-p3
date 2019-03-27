@@ -11,8 +11,8 @@ import {
 import { useHotKeyDispatcher } from './hooks/useHotKey'
 import {
   getCachedOrEmptyObj,
-  useCacheEffect,
-} from './hooks/useCacheEffect'
+  usePersistToLocalStorage,
+} from './hooks/usePersistToLocalStorage'
 import { LineList } from './components/LineList'
 import { compose, mergeDeepRight } from 'ramda'
 
@@ -24,7 +24,7 @@ function useStartApp() {
       getCachedOrEmptyObj,
     )(cacheKey),
   )
-  useCacheEffect(cacheKey, state)
+  usePersistToLocalStorage(cacheKey, state)
 
   const currentHotKeyMap = () => ({
     up: selectPrevAction,

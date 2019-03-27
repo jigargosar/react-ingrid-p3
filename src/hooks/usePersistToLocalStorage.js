@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { defaultTo } from 'ramda'
 
-export function useCacheEffect(cacheKey, state) {
+export function usePersistToLocalStorage(cacheKey, state) {
   useEffect(() => {
     localStorage.setItem(cacheKey, JSON.stringify(state))
   }, [state])
