@@ -55,7 +55,7 @@ const db = new PouchDB('http://127.0.0.1:5984/react-ingrid-p3-history')
 db.info()
   .then(info => {
     console.log(info)
-    toast('Connected to Local Couch history')
+    toast(`Connected to ${info.db_name}`)
   })
   .catch(e => {
     console.error(e)
