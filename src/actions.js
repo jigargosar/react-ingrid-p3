@@ -1,6 +1,7 @@
-export const SELECT_LINE = 'SELECT_LINE'
-export const SELECT_NEXT_LINE = 'SELECT_NEXT_LINE'
-export const SELECT_PREV_LINE = 'SELECT_PREV_LINE'
+export const newLine = Symbol('NEW_LINE')
+export const SELECT_LINE = Symbol('SELECT_LINE')
+export const SELECT_NEXT_LINE = Symbol('SELECT_NEXT_LINE')
+export const SELECT_PREV_LINE = Symbol('SELECT_NEXT_LINE')
 export const UNDO = 'UNDO'
 export const REDO = 'REDO'
 
@@ -22,4 +23,8 @@ export function undoAction(dispatch) {
 
 export function redoAction(dispatch) {
   dispatch({ type: REDO })
+}
+
+export const actions = {
+  [newLine]: dispatch => dispatch({ type: newLine }),
 }
