@@ -17,9 +17,11 @@ import { LineList } from './components/LineList'
 
 function useStartApp() {
   const cacheKey = 'react-ingrid-p3'
-  const [state, dispatch] = useReducer(rootReducer, null, () =>
-    getCachedAndMerge(initialState(), 'react-ingrid-p3'),
+  const [state, dispatch] = useReducer(
+    rootReducer,
+    getCachedAndMerge('react-ingrid-p3', initialState()),
   )
+
   usePersistToLocalStorage(cacheKey, state)
 
   const currentHotKeyMap = () => ({

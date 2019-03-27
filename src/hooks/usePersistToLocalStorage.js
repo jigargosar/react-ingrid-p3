@@ -19,7 +19,7 @@ export function getCachedOrEmptyObj(key) {
   return defaultTo({}, getCached(key))
 }
 
-export function getCachedAndMerge(stateToMerge, cacheKey) {
+export function getCachedAndMerge(cacheKey, stateToMerge) {
   return compose(
     mergeDeepRight(stateToMerge),
     getCachedOrEmptyObj,
