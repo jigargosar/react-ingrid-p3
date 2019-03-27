@@ -12,8 +12,6 @@ function findHotKeyHandler(e, km) {
 
 export function useHotKeyDispatcher(currentHotKeyMap, dispatch) {
   useEffect(() => {
-    window.addEventListener('keydown', listener)
-
     function listener(e) {
       const handler = findHotKeyHandler(e, currentHotKeyMap)
       if (handler) {
@@ -21,6 +19,8 @@ export function useHotKeyDispatcher(currentHotKeyMap, dispatch) {
         handler(dispatch)
       }
     }
+
+    window.addEventListener('keydown', listener)
 
     return () => {
       window.removeEventListener('keydown', listener)

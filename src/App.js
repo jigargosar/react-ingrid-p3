@@ -37,8 +37,7 @@ function currentHotKeyMap(isEditingSelected) {
 
 function useStartApp() {
   const cacheKey = 'react-ingrid-p3'
-  const [state, dispatch] = useReducer(
-    rootReducer,
+  const [state, dispatch] = useReducer(rootReducer, null, () =>
     localStorageGetAndMerge('react-ingrid-p3', initialState()),
   )
 
