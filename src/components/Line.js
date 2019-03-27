@@ -4,6 +4,11 @@ import {
   setEditingLineTitleAction,
   stopEditSelectedLineAction,
 } from '../actions'
+import { isEmpty } from 'ramda'
+
+function isBlank(string) {
+  return isEmpty(string.trim())
+}
 
 export function Line({ line, isSelected, isEditing, dispatch }) {
   const sc = `${isSelected ? 'bg-blue white' : ''}`
@@ -17,6 +22,8 @@ export function Line({ line, isSelected, isEditing, dispatch }) {
       el.focus()
     }
   }, [isSelected, isEditing])
+
+  const displayTitle = isBlank(line.title) ? 'Untitled' : line.title
 
   return (
     <>
@@ -40,7 +47,7 @@ export function Line({ line, isSelected, isEditing, dispatch }) {
           onFocus={onFocusHandler}
           onClick={onTitleClickHandler}
         >
-          {line.title}
+          {displayTitle}
         </div>
       )}
     </>
