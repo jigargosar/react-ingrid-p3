@@ -9,17 +9,19 @@ import {
   undoAction,
 } from './actions'
 import { useHotKeyDispatcher } from './hooks/useHotKey'
-import { getCached, useCacheEffect } from './hooks/useCacheEffect'
+import {
+  getCachedOrEmptyObj,
+  useCacheEffect,
+} from './hooks/useCacheEffect'
 import { LineList } from './components/LineList'
-import { compose, defaultTo, mergeDeepRight } from 'ramda'
+import { compose, mergeDeepRight } from 'ramda'
 
 function useStartApp() {
   const cacheKey = 'react-ingrid-p3'
   const [state, dispatch] = useReducer(rootReducer, null, () =>
     compose(
       mergeDeepRight(initialState()),
-      defaultTo({}),
-      getCached,
+      getCachedOrEmptyObj,
     )(cacheKey),
   )
   useCacheEffect(cacheKey, state)
