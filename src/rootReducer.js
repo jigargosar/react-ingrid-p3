@@ -102,9 +102,7 @@ function deleteSelectedLine(state) {
   return state
 }
 
-export const rootReducer = reducerEnhancer(reducer)
-
-export function reducer(state, action) {
+function reducer(state, action) {
   // console.log(`state,action`, state, action)
   const payload = action.payload
   switch (action.type) {
@@ -127,3 +125,5 @@ export function reducer(state, action) {
   }
   return state
 }
+
+export const rootReducer = reducerEnhancer(reducer)
