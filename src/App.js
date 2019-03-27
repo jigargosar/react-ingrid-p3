@@ -54,7 +54,7 @@ const db = new PouchDB('http://127.0.0.1:5984/react-ingrid-p3-history')
 
 db.info()
   .then(info => {
-    console.log(info)
+    console.debug(info)
     toast(`Connected to ${info.db_name}`)
   })
   .catch(e => {
