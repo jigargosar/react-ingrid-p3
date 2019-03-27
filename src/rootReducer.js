@@ -28,6 +28,7 @@ import {
   reducerEnhancer,
   undo,
 } from './undoManager'
+import { initialPouchHistoryState } from './pouchHistoryManager'
 
 function createLine() {
   return { id: `id_${nanoid()}`, title: faker.name.lastName() }
@@ -40,6 +41,7 @@ export function initialState() {
     selectedId: lines[0].id,
     isEditingSelected: false,
     history: initialHistoryState,
+    pouchHistory: initialPouchHistoryState,
   }
 }
 
