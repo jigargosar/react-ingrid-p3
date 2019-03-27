@@ -53,6 +53,6 @@ export function setEditingLineTitleAction(dispatch, title) {
   dispatch({ type: SET_EDITING_LINE_CONTENT, payload: { title } })
 }
 
-export function setPouchHistoryConnected(dispatch, info) {
+export function setPouchHistoryConnectedAction(dispatch, info) {
   dispatch({ type: SET_POUCH_HISTORY_CONNECTED, payload: { info } })
 }

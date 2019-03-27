@@ -16,3 +16,5 @@ db.info()
 export const initialPouchHistoryState = {
   connected: false,
 }
+
+function setPouchHistoryConnectedAction() {}
