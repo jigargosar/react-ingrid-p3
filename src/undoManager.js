@@ -7,6 +7,7 @@ import {
   over,
   prepend,
   tail,
+  take,
 } from 'ramda'
 import { REDO, UNDO } from './actions'
 
@@ -50,7 +51,10 @@ export const reducerEnhancer = reducer => {
     if (notEquals(oldStateWithoutHistory, newStateWithoutHistory)) {
       return overHistory(({ undoStack }) => {
         return {
-          undoStack: prepend(oldStateWithoutHistory, undoStack),
+          undoStack: prepend(
+            oldStateWithoutHistory,
+            take(1000, undoStack),
+          ),
           redoStack: [],
         }
       })(newState)
