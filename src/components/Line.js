@@ -18,7 +18,6 @@ export const Line = ({ line, isSelected, isEditing, dispatch }) => {
   useLayoutEffect(() => {
     const el = ref.current
     if (isSelected && el) {
-      console.log(`'focusing'`, 'focusing')
       el.focus()
     }
   }, [isSelected, isEditing])
