@@ -15,7 +15,7 @@ export function useHotKeyDispatcher(currentHotKeyMap, dispatch) {
     window.addEventListener('keydown', listener)
 
     function listener(e) {
-      const handler = findHotKeyHandler(e, currentHotKeyMap())
+      const handler = findHotKeyHandler(e, currentHotKeyMap)
       if (handler) {
         e.preventDefault()
         handler(dispatch)

@@ -17,6 +17,21 @@ import {
 } from './hooks/useLocalStorageSet'
 import { LineList } from './components/LineList'
 
+function currentHotKeyMap(isEditingSelected) {
+  const keyMap = {
+    up: selectPrevAction,
+    down: selectNextAction,
+    'meta+z': undoAction,
+    'meta+shift+z': redoAction,
+    enter: newLineAction,
+    delete: deleteSelectedLineAction,
+    space: editSelectedLineAction,
+  }
+  const editKeyMap = { esc: stopEditSelectedLineAction }
+
+  return isEditingSelected ? editKeyMap : keyMap
+}
+
 function useStartApp() {
   const cacheKey = 'react-ingrid-p3'
   const [state, dispatch] = useReducer(
@@ -26,18 +41,7 @@ function useStartApp() {
 
   useLocalStorageSet(cacheKey, state)
 
-  const currentHotKeyMap = () => ({
-    up: selectPrevAction,
-    down: selectNextAction,
-    'meta+z': undoAction,
-    'meta+shift+z': redoAction,
-    enter: newLineAction,
-    delete: deleteSelectedLineAction,
-    space: editSelectedLineAction,
-    esc: stopEditSelectedLineAction,
-  })
-
-  useHotKeyDispatcher(currentHotKeyMap, dispatch)
+  useHotKeyDispatcher(currentHotKeyMap(state.isEditingSelected), dispatch)
   return [state, dispatch]
 }
 
