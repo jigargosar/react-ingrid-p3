@@ -27,7 +27,10 @@ function currentHotKeyMap(isEditingSelected) {
     delete: deleteSelectedLineAction,
     space: editSelectedLineAction,
   }
-  const editKeyMap = { esc: stopEditSelectedLineAction }
+  const editKeyMap = {
+    esc: stopEditSelectedLineAction,
+    enter: stopEditSelectedLineAction,
+  }
 
   return isEditingSelected ? editKeyMap : keyMap
 }
