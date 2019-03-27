@@ -1,6 +1,7 @@
 import React, { useReducer } from 'react'
 import { initialState, rootReducer } from './rootReducer'
 import {
+  deleteSelectedLineAction,
   newLineAction,
   redoAction,
   selectNextAction,
@@ -26,7 +27,7 @@ function useStartApp() {
     'meta+z': undoAction,
     'meta+shift+z': redoAction,
     enter: newLineAction,
-    delete: deleteSelectedLineAction(),
+    delete: deleteSelectedLineAction,
   })
 
   useHotKeyDispatcher(currentHotKeyMap, dispatch)
