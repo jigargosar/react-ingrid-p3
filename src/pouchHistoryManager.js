@@ -11,10 +11,10 @@ export const initialPouchHistoryState = {
 
 const overPouchHistory = over(lensPath(['pouchHistory']))
 
-function setPouchHistoryConnectedAction(state) {
+export function setPouchHistoryConnected(state) {
   return overPouchHistory(assoc('connected', true))(state)
 }
 
-function setPouchHistoryConnectionError(state) {
+export function setPouchHistoryConnectionError(state) {
   return overPouchHistory(assoc('connected', false))(state)
 }

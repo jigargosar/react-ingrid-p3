@@ -30,7 +30,11 @@ import {
   reducerEnhancer,
   undo,
 } from './undoManager'
-import { initialPouchHistoryState } from './pouchHistoryManager'
+import {
+  initialPouchHistoryState,
+  setPouchHistoryConnected,
+  setPouchHistoryConnectionError,
+} from './pouchHistoryManager'
 
 function createLine() {
   return { id: `id_${nanoid()}`, title: faker.name.lastName() }
@@ -149,9 +153,9 @@ function reducer(state, action) {
     case REDO:
       return redo(state)
     case SET_POUCH_HISTORY_CONNECTED:
-      return { ...state, pouchHistory: { connected: true } }
+      return setPouchHistoryConnected(state)
     case SET_POUCH_HISTORY_CONNECTION_ERROR:
-      return { ...state, pouchHistory: { connected: false } }
+      return setPouchHistoryConnectionError(state)
     default:
       console.error('Unknown action.type', action.type)
   }

@@ -4,11 +4,11 @@ import {
   deleteSelectedLineAction,
   editSelectedLineAction,
   newLineAction,
-  pouchHistoryConnectionErrorAction,
+  pouchHistoryDbConnectedAction,
+  pouchHistoryDbConnectionErrorAction,
   redoAction,
   selectNextAction,
   selectPrevAction,
-  setPouchHistoryConnectedAction,
   stopEditSelectedLineAction,
   undoAction,
 } from './actions'
@@ -60,12 +60,12 @@ function App() {
       .info()
       .then(info => {
         console.debug(info)
-        setPouchHistoryConnectedAction(dispatch, info)
+        pouchHistoryDbConnectedAction(dispatch, info)
         toast(`Connected to ${info.db_name}`)
       })
       .catch(e => {
         console.error(e)
-        pouchHistoryConnectionErrorAction(dispatch, e)
+        pouchHistoryDbConnectionErrorAction(dispatch, e)
         toast('Error connecting to Local Couch History')
       })
   }, [])
