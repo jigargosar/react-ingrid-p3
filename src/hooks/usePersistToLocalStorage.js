@@ -15,7 +15,7 @@ export function getCached(key) {
   return null
 }
 
-export function getCachedOrEmptyObj(key) {
+function getCachedOrEmptyObj(key) {
   return defaultTo({}, getCached(key))
 }
 
