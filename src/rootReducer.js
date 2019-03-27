@@ -34,6 +34,7 @@ export function initialState() {
   return {
     lines,
     selectedId: lines[0].id,
+    isEditingSelected: false,
     history: initialHistoryState,
   }
 }
