@@ -1,9 +1,20 @@
 import { useEffect } from 'react'
 import { compose, defaultTo, mergeDeepRight } from 'ramda'
+import debounce from 'lodash.debounce'
+
+function setItem(cacheKey, state) {
+  localStorage.setItem(cacheKey, JSON.stringify(state))
+}
+
+const debouncedSetItem = debounce(setItem, 100, {
+  leading: false,
+  trailing: true,
+  maxWait: 1000,
+})
 
 export function useLocalStorageSet(cacheKey, state) {
   useEffect(() => {
-    localStorage.setItem(cacheKey, JSON.stringify(state))
+    debouncedSetItem(cacheKey, state)
   }, [state])
 }
 
