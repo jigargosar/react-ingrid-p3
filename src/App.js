@@ -29,7 +29,7 @@ function currentHotKeyMap(isEditingSelected) {
   }
   const editKeyMap = {
     esc: stopEditSelectedLineAction,
-    enter: stopEditSelectedLineAction,
+    enter: newLineAction,
   }
 
   return isEditingSelected ? editKeyMap : keyMap
