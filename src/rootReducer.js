@@ -121,6 +121,7 @@ function setEditingLineTitle(title, state) {
 
 function reducer(state, action) {
   // console.log(`state,action`, state, action)
+  console.count('action')
   const payload = action.payload
   switch (action.type) {
     case NEW_LINE:

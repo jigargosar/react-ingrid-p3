@@ -47,7 +47,7 @@ export const Line = React.memo(
             ref={ref}
             className={`lh-copy ph2 br2 ${sc}`}
             tabIndex={isSelected ? 0 : null}
-            onFocus={onFocusOrClickHandler}
+            onFocus={isSelected ? null : onFocusOrClickHandler}
             onClick={onFocusOrClickHandler}
           >
             {displayTitle}
