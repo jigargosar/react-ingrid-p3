@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import {
   selectLineAction,
   setEditingLineTitleAction,
@@ -10,48 +10,51 @@ function isBlank(string) {
   return isEmpty(string.trim())
 }
 
-export function Line({ line, isSelected, isEditing, dispatch }) {
-  const sc = `${isSelected ? 'bg-blue white' : ''}`
-  const ref = useRef()
-  const onFocusHandler = () => selectLineAction(line, dispatch)
-  const onTitleClickHandler = () => selectLineAction(line, dispatch)
+export const Line = React.memo(
+  ({ line, isSelected, isEditing, dispatch }) => {
+    const sc = `${isSelected ? 'bg-blue white' : ''}`
+    const ref = useRef()
+    const onFocusHandler = () => selectLineAction(line, dispatch)
+    const onTitleClickHandler = () => selectLineAction(line, dispatch)
 
-  useLayoutEffect(() => {
-    const el = ref.current
-    if (isSelected && el) {
-      el.focus()
-    }
-  }, [isSelected, isEditing])
+    useEffect(() => {
+      const el = ref.current
+      if (isSelected && el) {
+        console.log(`'focusing'`, 'focusing')
+        el.focus()
+      }
+    }, [isSelected, isEditing, ref.current])
 
-  const displayTitle = isBlank(line.title) ? 'Untitled' : line.title
+    const displayTitle = isBlank(line.title) ? 'Untitled' : line.title
 
-  console.log('render')
+    // console.log('render')
 
-  return (
-    <>
-      {isEditing ? (
-        <div className="flex">
-          <input
+    return (
+      <>
+        {isEditing ? (
+          <div className="flex">
+            <input
+              ref={ref}
+              className={`flex-grow-1 lh-copy pv0 ph2 bn br2`}
+              onBlur={() => stopEditSelectedLineAction(dispatch)}
+              value={line.title}
+              onChange={e =>
+                setEditingLineTitleAction(dispatch, e.target.value)
+              }
+            />
+          </div>
+        ) : (
+          <div
             ref={ref}
-            className={`flex-grow-1 lh-copy pv0 ph2 bn br2`}
-            onBlur={() => stopEditSelectedLineAction(dispatch)}
-            value={line.title}
-            onChange={e =>
-              setEditingLineTitleAction(dispatch, e.target.value)
-            }
-          />
-        </div>
-      ) : (
-        <div
-          ref={ref}
-          className={`lh-copy ph2 br2 ${sc}`}
-          tabIndex={isSelected ? 0 : null}
-          onFocus={onFocusHandler}
-          onClick={onTitleClickHandler}
-        >
-          {displayTitle}
-        </div>
-      )}
-    </>
-  )
-}
+            className={`lh-copy ph2 br2 ${sc}`}
+            tabIndex={isSelected ? 0 : null}
+            onFocus={onFocusHandler}
+            onClick={onTitleClickHandler}
+          >
+            {displayTitle}
+          </div>
+        )}
+      </>
+    )
+  },
+)
