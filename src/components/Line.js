@@ -11,14 +11,14 @@ export function Line({ line, isSelected, isEditing, dispatch }) {
     if (isSelected && el) {
       el.focus()
     }
-  }, [isSelected])
+  }, [isSelected, isEditing])
 
   return (
-    <>
+    <div className="flex">
       {isEditing ? (
         <input
           ref={ref}
-          className={`lh-copy ph3 br2 ${sc}`}
+          className={`flex-grow-1 lh-copy pv0 ph2 bn br2`}
           onFocus={onFocusHandler}
           value={line.title}
           onChange={e =>
@@ -28,13 +28,13 @@ export function Line({ line, isSelected, isEditing, dispatch }) {
       ) : (
         <div
           ref={ref}
-          className={`lh-copy ph3 br2 ${sc}`}
+          className={`flex-grow-1 lh-copy ph2 br2 ${sc}`}
           tabIndex={0}
           onFocus={onFocusHandler}
         >
           {line.title}
         </div>
       )}
-    </>
+    </div>
   )
 }
