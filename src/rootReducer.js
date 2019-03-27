@@ -111,8 +111,7 @@ export function reducer(state, action) {
     case NEW_LINE:
       return addNewLineAfterSelected(state)
     case DELETE_SELECTED_LINE:
-      const nextState = deleteSelectedLine(state)
-      return nextState
+      return deleteSelectedLine(state)
     case SELECT_LINE:
       return { ...state, selectedId: payload.line.id }
     case SELECT_NEXT_LINE:
