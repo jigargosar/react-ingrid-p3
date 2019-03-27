@@ -25,6 +25,8 @@ export function Line({ line, isSelected, isEditing, dispatch }) {
 
   const displayTitle = isBlank(line.title) ? 'Untitled' : line.title
 
+  console.log('render')
+
   return (
     <>
       {isEditing ? (
