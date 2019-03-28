@@ -63,7 +63,7 @@ function App() {
       .then(info => {
         console.debug(info)
         pouchHistoryDbConnectedAction(dispatch, info)
-        toast.success(`Connected to HistoryDB`, {
+        toast.success(`HistoryDB: connection established`, {
           closeButton: false,
           hideProgressBar: true,
         })
@@ -71,7 +71,7 @@ function App() {
       .catch(e => {
         console.error(e)
         pouchHistoryDbConnectionErrorAction(dispatch, e)
-        toast.error('Error HistoryDB offline', {
+        toast.error('HistoryDB: connection failed', {
           autoClose: false,
           closeButton: false,
         })
