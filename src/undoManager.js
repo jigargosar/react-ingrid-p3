@@ -46,8 +46,8 @@ export const reducerEnhancer = reducer => {
     const newState = reducer(oldState, action)
     if ([UNDO, REDO].includes(action.type)) return newState
 
-    const newStateWithoutHistory = omitHistory(newState)
-    const oldStateWithoutHistory = omitHistory(oldState)
+    const newStateWithoutHistory = omitNotUndoableState(newState)
+    const oldStateWithoutHistory = omitNotUndoableState(oldState)
     if (notEquals(oldStateWithoutHistory, newStateWithoutHistory)) {
       return overHistory(({ undoStack }) => {
         return {
@@ -65,5 +65,5 @@ export const reducerEnhancer = reducer => {
 }
 
 const overHistory = over(lensPath(['history']))
-const omitHistory = omit(['history'])
+const omitNotUndoableState = omit(['history'])
 const notEquals = complement(equals)
