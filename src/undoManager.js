@@ -11,7 +11,7 @@ import {
 } from 'ramda'
 import { REDO, UNDO } from './actions'
 
-export const initialHistoryState = { undoStack: [], redoStack: [] }
+export const initialUndoManagerState = { undoStack: [], redoStack: [] }
 
 export function undo(state) {
   const { history, ...stateWithoutHistory } = state
@@ -64,6 +64,6 @@ export const reducerEnhancer = reducer => {
   }
 }
 
-const overHistory = over(lensPath(['history']))
-const omitNotUndoableState = omit(['history', 'pouchHistory'])
+const overHistory = over(lensPath(['undoManager']))
+const omitNotUndoableState = omit(['undoManager', 'pouchHistory'])
 const notEquals = complement(equals)

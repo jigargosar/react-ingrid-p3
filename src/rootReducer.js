@@ -26,7 +26,7 @@ import {
   times,
 } from 'ramda'
 import {
-  initialHistoryState,
+  initialUndoManagerState,
   redo,
   reducerEnhancer,
   undo,
@@ -48,7 +48,7 @@ export function initialState() {
     lines,
     selectedId: lines[0].id,
     isEditingSelected: false,
-    history: initialHistoryState,
+    undoManager: initialUndoManagerState,
     pouchHistory: initialPouchHistoryState,
   }
 }
