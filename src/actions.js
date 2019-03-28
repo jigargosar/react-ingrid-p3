@@ -13,6 +13,10 @@ export const SET_POUCH_HISTORY_CONNECTED = Symbol(
   'SET_POUCH_HISTORY_CONNECTED',
 )
 
+export const SET_POUCH_HISTORY_CONNECTING = Symbol(
+  'SET_POUCH_HISTORY_CONNECTING',
+)
+
 export const SET_POUCH_HISTORY_CONNECTION_ERROR = Symbol(
   'SET_POUCH_HISTORY_CONNECTION_ERROR',
 )
@@ -55,6 +59,10 @@ export function stopEditSelectedLineAction(dispatch) {
 
 export function setEditingLineTitleAction(dispatch, title) {
   dispatch({ type: SET_EDITING_LINE_CONTENT, payload: { title } })
+}
+
+export function pouchHistoryDbConnectingAction(dispatch) {
+  dispatch({ type: SET_POUCH_HISTORY_CONNECTING })
 }
 
 export function pouchHistoryDbConnectedAction(dispatch, info) {

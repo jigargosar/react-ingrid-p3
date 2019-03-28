@@ -5,6 +5,7 @@ import {
   editSelectedLineAction,
   newLineAction,
   pouchHistoryDbConnectedAction,
+  pouchHistoryDbConnectingAction,
   pouchHistoryDbConnectionErrorAction,
   redoAction,
   selectNextAction,
@@ -56,6 +57,7 @@ function App() {
   const [state, dispatch] = useStartApp()
 
   useEffect(() => {
+    pouchHistoryDbConnectingAction(dispatch)
     pouchHistoryDB
       .info()
       .then(info => {
@@ -66,7 +68,7 @@ function App() {
       .catch(e => {
         console.error(e)
         pouchHistoryDbConnectionErrorAction(dispatch, e)
-        toast('Error connecting to Local Couch History')
+        toast.error('Error connecting to Local Couch History')
       })
   }, [])
 
