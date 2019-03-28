@@ -61,8 +61,8 @@ export function setEditingLineTitleAction(dispatch, title) {
   dispatch({ type: SET_EDITING_LINE_CONTENT, payload: { title } })
 }
 
-export function pouchHistoryDbConnectingAction(dispatch) {
-  dispatch({ type: SET_POUCH_HISTORY_CONNECTING })
+export function pouchHistoryDbConnectingAction(dispatch, startedAt) {
+  dispatch({ type: SET_POUCH_HISTORY_CONNECTING, payload: { startedAt } })
 }
 
 export function pouchHistoryDbConnectedAction(dispatch, info) {
