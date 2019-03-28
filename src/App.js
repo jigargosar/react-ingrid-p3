@@ -63,7 +63,7 @@ function App() {
       .then(info => {
         console.debug(info)
         pouchHistoryDbConnectedAction(dispatch, info)
-        toast.success(`Connected to ${info.db_name}`, {
+        toast.success(`Connected to HistoryDB`, {
           closeButton: false,
           hideProgressBar: true,
         })
