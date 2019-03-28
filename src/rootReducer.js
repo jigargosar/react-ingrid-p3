@@ -8,6 +8,7 @@ import {
   SELECT_PREV_LINE,
   SET_EDITING_LINE_CONTENT,
   SET_POUCH_HISTORY_CONNECTED,
+  SET_POUCH_HISTORY_CONNECTING,
   SET_POUCH_HISTORY_CONNECTION_ERROR,
   STOP_EDIT_SELECTED_LINE,
   UNDO,
@@ -33,6 +34,7 @@ import {
 import {
   initialPouchHistoryState,
   setPouchHistoryConnected,
+  setPouchHistoryConnecting,
   setPouchHistoryConnectionError,
 } from './pouchHistoryManager'
 
@@ -152,6 +154,8 @@ function reducer(state, action) {
       return undo(state)
     case REDO:
       return redo(state)
+    case SET_POUCH_HISTORY_CONNECTING:
+      return setPouchHistoryConnecting(state)
     case SET_POUCH_HISTORY_CONNECTED:
       return setPouchHistoryConnected(state)
     case SET_POUCH_HISTORY_CONNECTION_ERROR:

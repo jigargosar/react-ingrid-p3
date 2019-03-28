@@ -1,20 +1,38 @@
 import PouchDB from 'pouchdb-browser'
-import { assoc, lensPath, over } from 'ramda'
+import { assocPath, lensPath, over } from 'ramda'
 
 export const pouchHistoryDB = new PouchDB(
   'http://127.0.0.1:5984/react-ingrid-p3-history',
 )
 
 export const initialPouchHistoryState = {
-  connected: false,
+  dbInfoRD: { state: 'NOT_LOADED', data: null, error: null },
 }
 
-const overPouchHistory = over(lensPath(['pouchHistory']))
+const dbInfoRDPath = ['pouchHistory', 'dbInfoRD']
+
+const overDBInfoRD = over(lensPath(dbInfoRDPath))
+
+export function setPouchHistoryConnecting(state) {
+  return assocPath(dbInfoRDPath, {
+    state: 'LOADING',
+    data: null,
+    error: null,
+  })(state)
+}
 
 export function setPouchHistoryConnected(state) {
-  return overPouchHistory(assoc('connected', true))(state)
+  return assocPath(dbInfoRDPath, {
+    state: 'SUCCESS',
+    data: 'connectionInfoStub',
+    error: null,
+  })(state)
 }
 
 export function setPouchHistoryConnectionError(state) {
-  return overPouchHistory(assoc('connected', false))(state)
+  assocPath(dbInfoRDPath, {
+    state: 'ERROR',
+    data: null,
+    error: 'errorInfoStub',
+  })(state)
 }

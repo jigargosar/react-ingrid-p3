@@ -68,7 +68,10 @@ function App() {
       .catch(e => {
         console.error(e)
         pouchHistoryDbConnectionErrorAction(dispatch, e)
-        toast.error('Error connecting to Local Couch History')
+        toast.error('Error HistoryDB offline', {
+          autoClose: false,
+          closeButton: false,
+        })
       })
   }, [])
 
