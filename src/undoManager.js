@@ -65,5 +65,5 @@ export const reducerEnhancer = reducer => {
 }
 
 const overHistory = over(lensPath(['history']))
-const omitNotUndoableState = omit(['history'])
+const omitNotUndoableState = omit(['history', 'pouchHistory'])
 const notEquals = complement(equals)
