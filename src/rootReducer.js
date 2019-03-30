@@ -7,9 +7,6 @@ import {
   SELECT_NEXT_LINE,
   SELECT_PREV_LINE,
   SET_EDITING_LINE_CONTENT,
-  SET_POUCH_HISTORY_CONNECTED,
-  SET_POUCH_HISTORY_CONNECTING,
-  SET_POUCH_HISTORY_CONNECTION_ERROR,
   STOP_EDIT_SELECTED_LINE,
   UNDO,
 } from './actions'
@@ -31,12 +28,6 @@ import {
   reducerEnhancer,
   undo,
 } from './undoManager'
-import {
-  initialPouchHistoryState,
-  setPouchHistoryConnected,
-  setPouchHistoryConnecting,
-  setPouchHistoryConnectionError,
-} from './pouchHistoryManager'
 
 function createLine() {
   return { id: `id_${nanoid()}`, title: faker.name.lastName() }
@@ -49,7 +40,6 @@ export function initialState() {
     selectedId: lines[0].id,
     isEditingSelected: false,
     undoManager: initialUndoManagerState,
-    pouchHistory: initialPouchHistoryState,
   }
 }
 
@@ -154,12 +144,6 @@ function reducer(state, action) {
       return undo(state)
     case REDO:
       return redo(state)
-    case SET_POUCH_HISTORY_CONNECTING:
-      return setPouchHistoryConnecting(state)
-    case SET_POUCH_HISTORY_CONNECTED:
-      return setPouchHistoryConnected(state)
-    case SET_POUCH_HISTORY_CONNECTION_ERROR:
-      return setPouchHistoryConnectionError(state)
     default:
       console.error('Unknown action.type', action.type)
   }

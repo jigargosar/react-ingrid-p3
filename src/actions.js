@@ -9,18 +9,6 @@ export const SELECT_PREV_LINE = Symbol('SELECT_PREV_LINE')
 export const UNDO = Symbol('UNDO')
 export const REDO = Symbol('REDO')
 
-export const SET_POUCH_HISTORY_CONNECTED = Symbol(
-  'SET_POUCH_HISTORY_CONNECTED',
-)
-
-export const SET_POUCH_HISTORY_CONNECTING = Symbol(
-  'SET_POUCH_HISTORY_CONNECTING',
-)
-
-export const SET_POUCH_HISTORY_CONNECTION_ERROR = Symbol(
-  'SET_POUCH_HISTORY_CONNECTION_ERROR',
-)
-
 export function selectLineAction(line, dispatch) {
   dispatch({ type: SELECT_LINE, payload: { line } })
 }
@@ -59,19 +47,4 @@ export function stopEditSelectedLineAction(dispatch) {
 
 export function setEditingLineTitleAction(dispatch, title) {
   dispatch({ type: SET_EDITING_LINE_CONTENT, payload: { title } })
-}
-
-export function pouchHistoryDbConnectingAction(dispatch, startedAt) {
-  dispatch({ type: SET_POUCH_HISTORY_CONNECTING, payload: { startedAt } })
-}
-
-export function pouchHistoryDbConnectedAction(dispatch, info) {
-  dispatch({ type: SET_POUCH_HISTORY_CONNECTED, payload: { info } })
-}
-
-export function pouchHistoryDbConnectionErrorAction(dispatch, error) {
-  dispatch({
-    type: SET_POUCH_HISTORY_CONNECTION_ERROR,
-    payload: { error },
-  })
 }

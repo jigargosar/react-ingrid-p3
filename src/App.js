@@ -1,12 +1,9 @@
-import React, { useEffect, useReducer } from 'react'
+import React, { useReducer } from 'react'
 import { initialState, rootReducer } from './rootReducer'
 import {
   deleteSelectedLineAction,
   editSelectedLineAction,
   newLineAction,
-  pouchHistoryDbConnectedAction,
-  pouchHistoryDbConnectingAction,
-  pouchHistoryDbConnectionErrorAction,
   redoAction,
   selectNextAction,
   selectPrevAction,
@@ -21,7 +18,6 @@ import {
 import { LineList } from './components/LineList'
 import 'react-toastify/dist/ReactToastify.css'
 import { toast } from 'react-toastify'
-import { pouchHistoryDB } from './pouchHistoryManager'
 
 function currentHotKeyMap(isEditingSelected) {
   const keyMap = {
@@ -55,28 +51,6 @@ function useStartApp() {
 
 function App() {
   const [state, dispatch] = useStartApp()
-
-  useEffect(() => {
-    pouchHistoryDbConnectingAction(dispatch)
-    pouchHistoryDB
-      .info()
-      .then(info => {
-        console.debug(info)
-        pouchHistoryDbConnectedAction(dispatch, info)
-        toast.success(`HistoryDB: connection established`, {
-          closeButton: false,
-          hideProgressBar: true,
-        })
-      })
-      .catch(e => {
-        console.error(e)
-        pouchHistoryDbConnectionErrorAction(dispatch, e)
-        toast.error('HistoryDB: connection failed', {
-          autoClose: false,
-          closeButton: false,
-        })
-      })
-  }, [])
 
   return (
     <div className="min-vh-100 pv3 ph2">
